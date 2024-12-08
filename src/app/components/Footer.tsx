@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
+
 import { RiFacebookFill } from "react-icons/ri";
 import { PiTwitterLogoBold } from "react-icons/pi";
 import { BsInstagram } from "react-icons/bs";

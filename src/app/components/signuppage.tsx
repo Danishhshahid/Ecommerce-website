@@ -89,7 +89,7 @@ const Signuppage = () => {
         {/* Terms and Signup Button */}
         <div className="flex flex-col items-center space-y-4">
           <p className="text-sm text-center text-gray-500">
-            By creating your account, you agree to Nike's{" "}
+            By creating your account, you agree to Nike&#39;s{" "}
             <Link href="/" className="underline">
               Privacy Policy
             </Link>{" "}

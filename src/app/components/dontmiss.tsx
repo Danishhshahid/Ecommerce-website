@@ -10,7 +10,7 @@ const Dontmiss = () => {
       <div className="m-6 w-full flex flex-col">
         {/* Header */}
         <div className="w-full h-auto flex items-center mb-4">
-          <p className="text-xl sm:text-2xl lg:text-3xl font-semibold">Don't Miss</p>
+          <p className="text-xl sm:text-2xl lg:text-3xl font-semibold">Don&#39;t Miss</p>
         </div>
         {/* Content */}
         <div className="w-full flex flex-col gap-6">

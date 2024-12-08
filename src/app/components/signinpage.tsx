@@ -50,7 +50,7 @@ const Signinpage = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col items-center space-y-4">
           <p className="text-center text-sm text-gray-500">
-            By logging in, you agree to Nike's{" "}
+            By logging in, you agree to Nike&#39;s{" "}
             <Link href="/" className="underline">
               Privacy Policy
             </Link>{" "}

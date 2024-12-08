@@ -15,12 +15,12 @@ const TopHeader = () => {
         <div>
           <ul className="flex gap-2 sm:gap-4 items-center text-sm sm:text-base">
             <li>
-              <Link href="/" className="hover:underline">
+              <Link href="/gethelp" className="hover:underline">
                 Find a Store |
               </Link>
             </li>
             <li>
-              <Link href="/" className="hover:underline">
+              <Link href="/gethelp" className="hover:underline">
                 Help |
               </Link>
             </li>

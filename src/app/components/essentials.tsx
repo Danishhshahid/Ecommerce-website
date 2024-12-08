@@ -21,7 +21,7 @@ const Essentials = () => {
             <Image src={e1} alt="E1" className="w-full h-auto" priority />
             <div className="absolute bottom-6 left-6">
             <Link href={'/allproducts'}> <Button className="bg-white rounded-3xl text-black hover:bg-transparent hover:text-black">
-                Men's
+                Men&#39;s
               </Button></Link>
             </div>
           </div>
@@ -31,7 +31,7 @@ const Essentials = () => {
             <div className="absolute bottom-6 left-6">
             <Link href={'/allproducts'}>
               <Button className="bg-white rounded-3xl text-black hover:bg-transparent hover:text-black">
-                Women's
+                Women&#39;s
               </Button></Link>
             </div>
           </div>
@@ -41,7 +41,7 @@ const Essentials = () => {
             <div className="absolute bottom-6 left-6">
             <Link href={'/allproducts'}> 
               <Button className="bg-white rounded-3xl text-black hover:bg-transparent hover:text-black">
-                Kid's
+                Kid&#39;s
               </Button></Link>
             </div>
           </div>

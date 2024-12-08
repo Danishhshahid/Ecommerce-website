@@ -65,19 +65,19 @@ const Footerhead = () => {
 
           {/* Kid's Section */}
           <div className="w-full sm:w-[45%] md:w-[20%] flex flex-col gap-4">
-            <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold">Kid's</h1>
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold">Kid&#39;s</h1>
             <ul className="flex flex-col gap-2 text-gray-500">
               <li>
                 <Link href={'/'}>Infant & Toddler Shoes</Link>
               </li>
               <li>
-                <Link href={'/'}>Kids' Shoes</Link>
+                <Link href={'/'}>Kid&#39;s Shoes</Link>
               </li>
               <li>
-                <Link href={'/'}>Kids' Jordan Shoes</Link>
+                <Link href={'/'}>Kid&#39;s Jordan Shoes</Link>
               </li>
               <li>
-                <Link href={'/'}>Kids' Basketball Shoes</Link>
+                <Link href={'/'}>Kid&#39;s Basketball Shoes</Link>
               </li>
             </ul>
           </div>

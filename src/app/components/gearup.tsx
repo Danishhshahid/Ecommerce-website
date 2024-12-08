@@ -22,7 +22,7 @@ const Gearup = () => {
             <div className="flex flex-col gap-4">
               {/* Navigation */}
               <div className="flex justify-end items-center gap-2">
-                <p className="text-sm sm:text-base">Shop Men's</p>
+                <p className="text-sm sm:text-base">Shop Men&#39;s</p>
                 <Link href={"/"}>
                   <div className="bg-gray-100 w-10 h-10 rounded-full flex justify-center items-center text-xl">
                     <IoIosArrowBack />
@@ -42,7 +42,7 @@ const Gearup = () => {
                     <p>Nike Dri-FIT ADV TechKnit Ultra</p>
                     <p>₹3895</p>
                   </div>
-                  <p className="text-gray-500 text-sm">Men's Short-Sleeve Running Top</p>
+                  <p className="text-gray-500 text-sm">Men&#39;s Short-Sleeve Running Top</p>
                 </div>
                 <div className="w-full sm:w-[48%]">
                   <Image src={G2} alt="item2" />
@@ -50,7 +50,7 @@ const Gearup = () => {
                     <p>Nike Dri-FIT Challenger</p>
                     <p>₹2495</p>
                   </div>
-                  <p className="text-gray-500 text-sm">Men's 2-in-1 Versatile Shorts</p>
+                  <p className="text-gray-500 text-sm">Men&#39;s 2-in-1 Versatile Shorts</p>
                 </div>
               </div>
             </div>
@@ -60,7 +60,7 @@ const Gearup = () => {
             <div className="flex flex-col gap-4">
               {/* Navigation */}
               <div className="flex justify-end items-center gap-2">
-                <p className="text-sm sm:text-base">Shop Women's</p>
+                <p className="text-sm sm:text-base">Shop Women&#39;s</p>
                 <Link href={"/"}>
                   <div className="bg-gray-100 w-10 h-10 rounded-full flex justify-center items-center text-xl">
                     <IoIosArrowBack />
@@ -80,7 +80,7 @@ const Gearup = () => {
                     <p>Nike Dri-FIT ADV Run Division</p>
                     <p>₹5295</p>
                   </div>
-                  <p className="text-gray-500 text-sm">Women's Long-Sleeve Running Top</p>
+                  <p className="text-gray-500 text-sm">Women&#39;s Long-Sleeve Running Top</p>
                 </div>
                 <div className="w-full sm:w-[48%]">
                   <Image src={G4} alt="item4" />
@@ -88,7 +88,7 @@ const Gearup = () => {
                     <p>Nike Fast</p>
                     <p>₹3795</p>
                   </div>
-                  <p className="text-gray-500 text-sm">Women's 7/8 Leggings with Pockets</p>
+                  <p className="text-gray-500 text-sm">Women&#39;s 7/8 Leggings with Pockets</p>
                 </div>
               </div>
             </div>

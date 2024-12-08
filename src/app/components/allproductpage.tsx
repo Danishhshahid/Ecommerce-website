@@ -93,7 +93,6 @@ import item87 from "./../../../public/assets/Itemssss (87).png";
 import item88 from "./../../../public/assets/Itemssss (88).png";
 import item89 from "./../../../public/assets/Itemssss (89).png";
 import item90 from "./../../../public/assets/Itemssss (90).png";
-import item91 from "./../../../public/assets/Itemssss (90).png";
 
 const Allproductpage = () => {
   return (
@@ -772,7 +771,7 @@ const Allproductpage = () => {
                   category: "Men's Shoes",
                 },
                 {
-                  src: item91,
+                  src: item90,
                   name: "Nike Air Max 97 SE",
                   price: "₹16995",
                   category: "Men's Shoes",
