@@ -98,24 +98,25 @@ const Allproductpage = () => {
   return (
     <div className="w-full min-h-screen  flex items-center overflow-hidden">
       <div className="w-full h-full m-6  flex flex-col">
-        <div className="w-full h-[50px] text-black flex items-center justify-between">
+        <div className="w-full h-[50px]  text-black flex items-center justify-between">
           <div className="text-black">
-            <h1 className="text-2xl">New(500)</h1>
+            <h1 className="text-2xl sm:text-xl md:text-2xl">New(500)</h1>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4 justify-between items-center">
             <div className="flex justify-center items-center">
-              <p>Hide Filters</p>
-              <LuSettings2 />
+              <p className="text-sm sm:text-base md:text-lg">Hide Filters</p>
+              <LuSettings2 className="text-xl sm:text-2xl md:text-3xl" />
             </div>
             <div className="flex justify-center items-center">
-              <p>Sort By</p>
-              <IoIosArrowForward className=" hover:rotate-90 transition-transform duration-300" />
+              <p className="text-sm sm:text-base md:text-lg">Sort By</p>
+              <IoIosArrowForward className="hover:rotate-90 transition-transform duration-300 text-xl sm:text-2xl md:text-3xl" />
             </div>
           </div>
         </div>
-        <div className="w-full h-full flex ">
-          <div className="w-[20%] h-full ">
-            <div className="w-full h-[300px]  flex flex-col overflow-auto">
+        <div className="w-full  h-full flex ">
+          <div className="w-[50%]  sm:w-[25%] md:w-[20%] h-full">
+            {/* Category Section */}
+            <div className="w-[50%] lg:w-[100%] sm:w-[25%] md:w-[20%] h-auto flex flex-col overflow-auto">
               <ul className="flex flex-col gap-4">
                 <li>
                   <Link href={"/"}>Shoes</Link>
@@ -155,16 +156,17 @@ const Allproductpage = () => {
                 </li>
               </ul>
             </div>
-            <div className="h-[200px] w-full mt-6">
-              <div className="p-4 w-full max-w-sm bg-white">
-                {/* <!-- Gender Section --> */}
-                <details className="mb-4  border-t-2">
-                  <summary className="flex justify-between w-full items-center cursor-pointer text-lg font-semibold ">
+
+            {/* Filter Section */}
+            <div className="h-auto w-full mt-6">
+              <div className="p-4 w-full max-w-sm bg-white shadow-md rounded-lg">
+                {/* Gender Section */}
+                <details className="mb-4 border-t-2">
+                  <summary className="flex justify-between w-full items-center cursor-pointer text-lg font-semibold">
                     <div className="flex w-full justify-between items-center">
                       <h1>Gender</h1>
                       <p>
-                        {" "}
-                        <IoIosArrowForward className=" hover:rotate-90 transition-transform duration-300" />{" "}
+                        <IoIosArrowForward className="hover:rotate-90 transition-transform duration-300" />
                       </p>
                     </div>
                   </summary>
@@ -184,14 +186,13 @@ const Allproductpage = () => {
                   </div>
                 </details>
 
-                {/* <!-- Kids Section --> */}
+                {/* Kids Section */}
                 <details className="mb-4 border-t-2">
                   <summary className="flex justify-between w-full items-center cursor-pointer text-lg font-semibold">
                     <div className="flex w-full justify-between items-center">
                       <h1>Kids</h1>
                       <p>
-                        {" "}
-                        <IoIosArrowForward className=" hover:rotate-90 transition-transform duration-300" />{" "}
+                        <IoIosArrowForward className="hover:rotate-90 transition-transform duration-300" />
                       </p>
                     </div>
                   </summary>
@@ -207,14 +208,13 @@ const Allproductpage = () => {
                   </div>
                 </details>
 
-                {/* <!-- Shop By Price Section --> */}
+                {/* Shop By Price Section */}
                 <details>
                   <summary className="flex justify-between w-full items-center cursor-pointer text-lg font-semibold">
                     <div className="flex w-full justify-between items-center">
-                      <h1>Gender</h1>
+                      <h1>Price</h1>
                       <p>
-                        {" "}
-                        <IoIosArrowForward className=" hover:rotate-90 transition-transform duration-300" />{" "}
+                        <IoIosArrowForward className="hover:rotate-90 transition-transform duration-300" />
                       </p>
                     </div>
                   </summary>
@@ -232,6 +232,7 @@ const Allproductpage = () => {
               </div>
             </div>
           </div>
+
           <div className="w-[80%] h-full  overflow-auto">
             <div className="w-full mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Product Card */}
