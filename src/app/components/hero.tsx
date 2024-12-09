@@ -6,17 +6,20 @@ import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   return (
-    <div className="w-full h-auto mt-3 flex flex-col">
+    <div className="w-full h-auto mt-3 mb-6 flex flex-col">
       {/* Top Section */}
-      <div className="w-full h-[50px] bg-slate-100 flex flex-col justify-center items-center">
-        <h2 className="font-semibold text-lg sm:text-xl">Hello Nike App</h2>
-        <p className="text-sm sm:text-base">
-          Download the app to access everything Nike.{" "}
-          <Link href="/allproducts" className="font-semibold underline">
-            Get Your Great
-          </Link>
-        </p>
-      </div>
+      <div className="w-full h-auto bg-slate-100 flex flex-col justify-center items-center px-4 py-3">
+  <h2 className="font-semibold text-base sm:text-lg md:text-xl text-center">
+    Hello Nike App
+  </h2>
+  <p className="text-xs sm:text-sm md:text-base text-center mt-2">
+    Download the app to access everything Nike.{" "}
+    <Link href="/allproducts" className="font-semibold underline">
+      Get Your Great
+    </Link>
+  </p>
+</div>
+
 
       {/* Hero Image Section */}
       <div className="w-full h-auto flex justify-center items-center my-6 px-4 sm:px-8">

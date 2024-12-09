@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 
-const Featured = () => {
+const Featuredpage = () => {
   return (
-    <div className="w-full h-auto flex items-center justify-center px-4 sm:px-6 lg:px-12">
+    <div className="w-full h-auto flex items-center mt-6 justify-center px-4 sm:px-6 lg:px-12">
       <div className="w-full flex flex-col gap-6">
         {/* Header Section */}
         <div className="w-full flex items-center">
@@ -44,4 +44,4 @@ const Featured = () => {
   );
 };
 
-export default Featured;
+export default Featuredpage;

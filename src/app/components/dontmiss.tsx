@@ -19,8 +19,9 @@ const Dontmiss = () => {
             <Image
               src={featuredpic}
               alt="featuredpic"
-              className="w-full h-auto"
+              className="w-full h-auto rounded-lg"
               priority={true}
+
             />
           </div>
           {/* Text Section */}

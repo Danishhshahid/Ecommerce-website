@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const Gearup = () => {
   return (
-    <div className="w-full h-auto flex flex-col px-4 sm:px-6 lg:px-12 mb-6">
+    <div className="w-full h-auto flex flex-col mt-6 px-4 sm:px-6 lg:px-12 mb-6">
       <div className="w-full flex flex-col">
         {/* Header */}
         <div className="w-full h-auto flex items-center mb-4">
@@ -36,21 +36,25 @@ const Gearup = () => {
               </div>
               {/* Items */}
               <div className="flex flex-wrap justify-between gap-6">
-                <div className="w-full sm:w-[48%]">
-                  <Image src={G1} alt="item1" />
-                  <div className="flex justify-between mt-2">
-                    <p>Nike Dri-FIT ADV TechKnit Ultra</p>
-                    <p>₹3895</p>
+                <div className="w-full sm:w-[48%] flex flex-col gap-2">
+                  <Image src={G1} alt="item1" className="w-full rounded-xl" />
+                  <div className="flex justify-between">
+                    <p className="font-semibold">Nike Dri-FIT ADV TechKnit Ultra</p>
+                    <p className="font-semibold">₹3895</p>
                   </div>
-                  <p className="text-gray-500 text-sm">Men&#39;s Short-Sleeve Running Top</p>
+                  <p className="text-gray-500 text-sm">
+                    Men&#39;s Short-Sleeve Running Top
+                  </p>
                 </div>
-                <div className="w-full sm:w-[48%]">
-                  <Image src={G2} alt="item2" />
-                  <div className="flex justify-between mt-2">
-                    <p>Nike Dri-FIT Challenger</p>
-                    <p>₹2495</p>
+                <div className="w-full sm:w-[48%] flex flex-col gap-2">
+                  <Image src={G2} alt="item2" className="w-full rounded-2xl" />
+                  <div className="flex justify-between">
+                    <p className="font-semibold">Nike Dri-FIT Challenger</p>
+                    <p className="font-semibold">₹2495</p>
                   </div>
-                  <p className="text-gray-500 text-sm">Men&#39;s 2-in-1 Versatile Shorts</p>
+                  <p className="text-gray-500 text-sm">
+                    Men&#39;s 2-in-1 Versatile Shorts
+                  </p>
                 </div>
               </div>
             </div>
@@ -74,21 +78,25 @@ const Gearup = () => {
               </div>
               {/* Items */}
               <div className="flex flex-wrap justify-between gap-6">
-                <div className="w-full sm:w-[48%]">
-                  <Image src={G3} alt="item3" />
-                  <div className="flex justify-between mt-2">
-                    <p>Nike Dri-FIT ADV Run Division</p>
-                    <p>₹5295</p>
+                <div className="w-full sm:w-[48%] flex flex-col gap-2">
+                  <Image src={G3} alt="item3" className="w-full rounded-2xl" />
+                  <div className="flex justify-between">
+                    <p className="font-semibold">Nike Dri-FIT ADV Run Division</p>
+                    <p className="font-semibold">₹5295</p>
                   </div>
-                  <p className="text-gray-500 text-sm">Women&#39;s Long-Sleeve Running Top</p>
+                  <p className="text-gray-500 text-sm">
+                    Women&#39;s Long-Sleeve Running Top
+                  </p>
                 </div>
-                <div className="w-full sm:w-[48%]">
-                  <Image src={G4} alt="item4" />
-                  <div className="flex justify-between mt-2">
-                    <p>Nike Fast</p>
-                    <p>₹3795</p>
+                <div className="w-full sm:w-[48%] flex flex-col gap-2">
+                  <Image src={G4} alt="item4" className="w-full rounded-2xl" />
+                  <div className="flex justify-between">
+                    <p className="font-semibold">Nike Fast</p>
+                    <p className="font-semibold">₹3795</p>
                   </div>
-                  <p className="text-gray-500 text-sm">Women&#39;s 7/8 Leggings with Pockets</p>
+                  <p className="text-gray-500 text-sm">
+                    Women&#39;s 7/8 Leggings with Pockets
+                  </p>
                 </div>
               </div>
             </div>

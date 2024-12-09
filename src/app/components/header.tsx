@@ -15,13 +15,13 @@ const Header = () => {
         <div className="w-full h-full flex justify-between items-center">
           {/* Left Nike Icon */}
           <div className="text-4xl sm:text-5xl lg:text-6xl">
-            <SiNike />
+            <Link href={"/"}> <SiNike /></Link>
           </div>
 
           {/* Navigation Links */}
           <div className="hidden sm:block">
             <ul className="flex gap-4 md:gap-6 lg:gap-8 text-sm md:text-base lg:text-lg">
-              <li><Link href="/">News & Featured</Link></li>
+              <li><Link href="/featuredPage">News & Featured</Link></li>
               <li><Link href="/allproducts">Men</Link></li>
               <li><Link href="/allproducts">Women</Link></li>
               <li><Link href="/allproducts">Kids</Link></li>
@@ -49,7 +49,7 @@ const Header = () => {
             </Link>
 
             {/* Cart Icon */}
-            <Link href="/">
+            <Link href="/Cartpage">
               <IoBagHandleOutline className="text-xl sm:text-2xl" />
             </Link>
           </div>
