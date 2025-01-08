@@ -21,7 +21,7 @@ const BestsellingCard = ({
   slug: string;
 }) => {
   return (
-    <div className="flex-shrink-0 flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow mb-6 w-[280px]">
+    <div className="flex-shrink-0 flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow mb-6 max-w-sm">
       {/* Image Section */}
       <Link href={`/${category}/${slug}`}>
         <div className="w-full h-60 bg-gray-50 rounded-t-lg overflow-hidden">
