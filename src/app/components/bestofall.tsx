@@ -1,57 +1,88 @@
-import Link from 'next/link';
-import React from 'react';
+"use client";
+import React, { useRef } from "react";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import item1 from "./../../../public/assets/item1.png";
-import item2 from "./../../../public/assets/item2.png";
-import Image from 'next/image';
+import BestsellingCard from "./ProductCard";
+import { useAppSelector } from "../store/hooks";
+import { StaticImageData } from "next/image";
 
 const Bestofall = () => {
+  const products = useAppSelector((state) => state.products);
+
+  // Logic to filter bestselling products
+  const bestsell = products.filter((product) => product.isBestSelling);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = (direction: "left" | "right") => {
+    const scrollAmount = 300; // Amount to scroll
+    if (scrollContainerRef.current) {
+      if (direction === "left") {
+        scrollContainerRef.current.scrollBy({
+          left: -scrollAmount,
+          behavior: "smooth",
+        });
+      } else {
+        scrollContainerRef.current.scrollBy({
+          left: scrollAmount,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
+
   return (
-    <div className="w-full h-auto flex items-center px-4 sm:px-6 md:px-8 lg:px-12">
-      <div className="w-full h-full flex flex-col gap-6">
-        {/* Header Section */}
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">Best of Air Max</h1>
-          <div className="flex items-center gap-2">
-            <p className="text-sm sm:text-base">Shop</p>
-            <Link href="/">
-              <div className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200">
-                <IoIosArrowBack />
-              </div>
-            </Link>
-            <Link href="/">
-              <div className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200">
-                <IoIosArrowForward />
-              </div>
-            </Link>
-          </div>
+    <div className="w-full h-auto flex flex-col gap-6 px-4 sm:px-6 md:px-8 lg:px-12">
+      {/* Header Section */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-semibold">Best of Air Max</h1>
+        <div className="flex items-center gap-2">
+          <p className="text-sm sm:text-base">Shop</p>
+          <button
+            onClick={() => handleScroll("left")}
+            className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200"
+          >
+            <IoIosArrowBack />
+          </button>
+          <button
+            onClick={() => handleScroll("right")}
+            className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200"
+          >
+            <IoIosArrowForward />
+          </button>
         </div>
+      </div>
 
-        {/* Product Grid Section */}
-        <div className="w-full mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Product Card */}
-          {[
-            { src: item1, name: "Nike Air Max Pulse", price: "₹13995", category: "Women's Shoes" },
-            { src: item1, name: "Nike Air Max Pulse", price: "₹13995", category: "Men's Shoes" },
-            { src: item2, name: "Nike Air Max 97 SE", price: "₹16995", category: "Men's Shoes" },
-          ].map((item, index) => (
-            <div key={index} className="w-full h-[500px] flex flex-col">
-              {/* Image Section */}
-              <div className="w-full h-[80%] flex justify-center items-center bg-gray-50 rounded-lg overflow-hidden">
-                <Image src={item.src} alt={item.name} className="object-contain" />
-              </div>
+      {/* Horizontal Scrollable Product Section */}
+      <div
+        ref={scrollContainerRef}
+        className="w-full mt-2 flex h-[450px] gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
+      >
+        {bestsell.map((items, i) => {
+          let imageSrc: string = "";
 
-              {/* Product Info */}
-              <div className="w-full h-[20%] flex flex-col justify-between mt-2">
-                <div className="flex justify-between items-center">
-                  <p className="font-medium">{item.name}</p>
-                  <p className="text-sm font-semibold">{item.price}</p>
-                </div>
-                <p className="text-sm text-gray-500">{item.category}</p>
-              </div>
+          if (Array.isArray(items.img)) {
+            imageSrc = items.img[0] || "";
+          } else if (items.img && (items.img as StaticImageData).src) {
+            imageSrc = (items.img as StaticImageData).src;
+          } else {
+            imageSrc = "/assets/default-placeholder.png";
+          }
+
+          return (
+            <div
+              key={i}
+              className="transition-transform transform hover:scale-105"
+            >
+              <BestsellingCard
+                src={imageSrc}
+                alt={items.title}
+                title={items.title}
+                price={items.price}
+                category={items.category}
+                slug={items.slug}
+              />
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
     </div>
   );

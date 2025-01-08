@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
-import React from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import React from "react";
 import { SiNike } from "react-icons/si";
 
 const Signinpage = () => {
@@ -64,7 +64,10 @@ const Signinpage = () => {
           </Button>
           <p className="text-sm">
             Not a Member?{" "}
-            <Link href="/signup" className="underline text-black hover:text-gray-800">
+            <Link
+              href="/signup"
+              className="underline text-black hover:text-gray-800"
+            >
               Join Us.
             </Link>
           </p>

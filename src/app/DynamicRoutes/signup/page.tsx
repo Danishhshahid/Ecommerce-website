@@ -1,9 +1,9 @@
 import React from 'react'
-import Productdetail from '../components/productdetail'
+import Signuppage from '@/app/components/signuppage'
 
 const signup = () => {
   return (
-    <Productdetail/>
+    <Signuppage/>
   )
 }
 

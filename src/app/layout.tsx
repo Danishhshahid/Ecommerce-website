@@ -4,6 +4,7 @@ import "./globals.css";
 import TopHeader from "./components/Topheader";
 import Header from "./components/header";
 import Footer from "./components/Footer";
+import Providers from "./providers";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,18 +24,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}:{
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Providers>
         <TopHeader/>
         <Header/>
         {children}
         <Footer/>
+        </Providers>
       </body>
     </html>
   );

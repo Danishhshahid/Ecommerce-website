@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import cart1 from "./../../../public/assets/cart1.png";
-import cart2 from "./../../../public/assets/check (1).png";  // First item image
-  // New image for second item
+import cart2 from "./../../../public/assets/check (1).png"; // First item image
+// New image for second item
 import { FaRegHeart } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ const Cartpage = () => {
                   {/* Second Item Image */}
                   {idx === 1 && (
                     <Image
-                      src={cart2}  // New image for second item
+                      src={cart2} // New image for second item
                       alt="Cart Item"
                       className="max-w-[150px] max-h-[150px] object-contain"
                     />
@@ -55,14 +55,25 @@ const Cartpage = () => {
                     <p className="text-lg font-medium">
                       {idx === 0
                         ? "MaxNike Air Max 97 SE"
-                        : "Nike Air Max 97 SE"} {/* Updated Name */}
+                        : "Nike Air Max 97 SE"}{" "}
+                      {/* Updated Name */}
                     </p>
                     {/* Change Price for Second Item */}
-                    <p className="text-lg font-semibold">₹ {idx === 0 ? "3,895.00" : " 16 995.00"}</p>
+                    <p className="text-lg font-semibold">
+                      ₹ {idx === 0 ? "3,895.00" : " 16 995.00"}
+                    </p>
                   </div>
                   <div className="text-gray-600 text-sm">
-                    <p>{idx === 0 ? "Men's Shoes" : "Men's Shoes"} {/* Updated Description */}</p>
-                    <p>{idx === 0 ? "Men's Short-Sleeve Running Top" : "Flat Pewter/Light Bone/Black/White"}</p> {/* Updated Description */}
+                    <p>
+                      {idx === 0 ? "Men's Shoes" : "Men's Shoes"}{" "}
+                      {/* Updated Description */}
+                    </p>
+                    <p>
+                      {idx === 0
+                        ? "Men's Short-Sleeve Running Top"
+                        : "Flat Pewter/Light Bone/Black/White"}
+                    </p>{" "}
+                    {/* Updated Description */}
                   </div>
                   <div className="flex flex-wrap gap-4">
                     <div className="flex gap-2">
@@ -103,7 +114,7 @@ const Cartpage = () => {
             <p>Total</p>
             <p>₹ 8,890.00</p> {/* Updated total */}
           </div>
-          <Link href={'/checkout'}>
+          <Link href={"/DynamicRoutes/checkout"}>
             <Button className="rounded-full w-full py-3 text-sm font-semibold bg-green-600 text-white">
               Member Checkout
             </Button>

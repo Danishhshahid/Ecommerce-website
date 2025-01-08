@@ -1,5 +1,5 @@
+import Cartpage from '@/app/components/cartpage'
 import React from 'react'
-import Cartpage from '../components/cartpage'
 
 const Cart = () => {
   return (

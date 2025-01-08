@@ -1,5 +1,5 @@
 import React from 'react'
-import Gethelppage from '../components/gethelppage'
+import Gethelppage from '@/app/components/gethelppage'
 
 const Gethelp = () => {
   return (

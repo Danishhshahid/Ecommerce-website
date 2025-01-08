@@ -1,5 +1,5 @@
 import React from 'react'
-import Allproductpage from '../components/allproductpage'
+import Allproductpage from '@/app/components/allproductpage'
 
 const Allproducts = () => {
   return (

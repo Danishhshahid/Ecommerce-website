@@ -106,7 +106,7 @@ const Footer = () => {
       <div className="border-t border-gray-800 mt-8 pt-4 text-center flex flex-col lg:flex-row justify-between items-center text-gray-500">
         <div className="flex flex-col lg:flex-row items-center gap-2">
           <TfiLocationPin className="text-white text-xl" />
-          <p className="text-xl font-bold">India</p>
+          <p className="text-xl font-bold">Pakistan</p>
           <p>© Copyright Rimel 2022. All rights reserved</p>
         </div>
 

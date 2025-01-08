@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 import { SiJordan } from "react-icons/si";
 
 const TopHeader = () => {
@@ -20,17 +20,17 @@ const TopHeader = () => {
               </Link>
             </li>
             <li>
-              <Link href="/gethelp" className="hover:underline">
+              <Link href="/DynamicRoutes/gethelp" className="hover:underline">
                 Help |
               </Link>
             </li>
             <li>
-              <Link href="/signup" className="hover:underline">
+              <Link href="/DynamicRoutes/signup" className="hover:underline">
                 Join Us |
               </Link>
             </li>
             <li>
-              <Link href="/signin" className="hover:underline">
+              <Link href="/DynamicRoutes/signin" className="hover:underline">
                 Sign in
               </Link>
             </li>

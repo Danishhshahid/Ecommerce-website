@@ -1,7 +1,7 @@
 import Bestofall from "./components/bestofall";
 
 import Dontmiss from "./components/dontmiss";
-import Essentials from "./components/essentials";
+import Essentials from "./components/categories";
 import Featured from "./components/featured";
 
 import Footerhead from "./components/footerhead";

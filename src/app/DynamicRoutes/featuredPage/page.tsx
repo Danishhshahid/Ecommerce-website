@@ -1,5 +1,5 @@
 import React from 'react'
-import Featuredpage from '../components/featured'
+import Featuredpage from '@/app/components/featured'
 
 
 const Featured = () => {

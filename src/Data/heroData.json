@@ -1,0 +1,11 @@
+[ 
+    {
+    "name": "Nike Air Max Pulse",
+    "description" : "Extreme comfort. Hyper durable. Max volume. Introducing the Air Max Pulse—designed to push you past your limits and help you go to the max",
+    "Images":"/assets/heropic.png",
+    "ButtonName1" : "Notify Me",
+    "ButtonName2":"Shop Air Max",
+    "Heading1":"Hello Nike App",
+    "heading2":"Download the app to access everything Nike.",
+    "headinglink":"Get Your Great"
+}]
