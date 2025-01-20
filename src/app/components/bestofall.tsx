@@ -57,30 +57,30 @@ const Bestofall = () => {
         ref={scrollContainerRef}
         className="w-full mt-2 flex h-[450px] gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
       >
-        {bestsell.map((items, i) => {
-          let imageSrc: string = "";
+        {bestsell.map((item, i) => {
+         let imageSrc: string = "";
 
-          if (Array.isArray(items.img)) {
-            imageSrc = items.img[0] || "";
-          } else if (items.img && (items.img as StaticImageData).src) {
-            imageSrc = (items.img as StaticImageData).src;
-          } else {
-            imageSrc = "/assets/default-placeholder.png";
-          }
+         if (Array.isArray(item.img)) {
+           imageSrc = item.img[0] || "";
+         } else if (item.img && (item.img as StaticImageData).src) {
+           imageSrc = (item.img as StaticImageData).src;
+         } else {
+           imageSrc = "/assets/default-placeholder.png";
+         }
 
-          return (
-            <div
-              key={i}
-              className="transition-transform transform hover:scale-105"
-            >
-              <BestsellingCard
-                src={imageSrc}
-                alt={items.title}
-                title={items.title}
-                price={items.price}
-                category={items.category}
-                slug={items.slug}
-              />
+         return (
+           <div
+             key={i}
+             className="transition-transform transform hover:scale-105 w-[350px]"
+           >
+             <BestsellingCard
+               src={imageSrc}
+               alt={item.title}
+               title={item.title}
+               price={item.price}
+               category={item.description}
+               slug={item.slug}
+             />
             </div>
           );
         })}

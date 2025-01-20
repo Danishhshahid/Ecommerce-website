@@ -2,8 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useAppDispatch } from "../store/hooks";
-import { addToCart } from "../store/features/cart";
 import BSCaddToCart from "./BSCaddToCart";
 
 const BestsellingCard = (
@@ -28,7 +26,6 @@ const BestsellingCard = (
 
 
 ) => {
-  const dispatch = useAppDispatch()
   
   return (
     <div className="flex-shrink-0 flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow mb-6 max-w-sm">

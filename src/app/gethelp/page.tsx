@@ -1,5 +1,6 @@
 import React from 'react'
-import Gethelppage from '@/app/components/gethelppage'
+import Gethelppage from '../components/gethelppage'
+
 
 const Gethelp = () => {
   return (

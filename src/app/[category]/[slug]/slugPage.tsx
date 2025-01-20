@@ -3,9 +3,8 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { BsCart3 } from "react-icons/bs";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {useAppSelector } from "../../store/hooks";
 import { FaPlus, FaMinus } from "react-icons/fa6";
-import { addToCart } from '@/app/store/features/cart';
 import AddToCartToastify from '@/app/components/AddToCartToastify';
 
 
@@ -16,7 +15,6 @@ const SlugPage = ({ params }: { params: Promise<{ slug: string }> }) => {
     const product = useAppSelector((state) => state.products); 
     // Filter products based on category
     const slugdata = product.filter((val) => val.slug === slug);
-    const dispatch = useAppDispatch()
     const [cartItem, setcartItem] = useState({
        id:slugdata[0].id,
         title:slugdata[0].title,

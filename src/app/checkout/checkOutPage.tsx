@@ -5,13 +5,11 @@ import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import React from "react";
 import { TbTruckDelivery } from "react-icons/tb";
-import pic1 from "./../../../public/assets/check (1).png";
-import pic2 from "./../../../public/assets/check (2).png";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {  useAppSelector } from "../store/hooks";
 
 const Checkoutpage = () => {
   const cartArray = useAppSelector((state) => state.cart);
-  const dispatch = useAppDispatch();
+
 
   const total = cartArray.reduce((total, array) => {
     const discount = array.discount ?? 0; // Use 0 if discount is undefined

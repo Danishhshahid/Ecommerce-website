@@ -9,8 +9,22 @@ import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "../store/hooks";
 import { addToCart } from "../store/features/cart";
 import { BsCart3 } from "react-icons/bs";
+import { StaticImageData } from "next/image";
 
-const AddToCartToastify = ({cartItem} :any) => {
+interface cartItem{
+  id: number;
+  title: string;
+  img: string[] | StaticImageData | undefined;
+  slug: string;
+  price: number;
+  category: string;
+  size: string;
+  qty: number;
+  discount: number | undefined;
+  color: string;
+}
+
+const AddToCartToastify = ({cartItem} :{cartItem : cartItem}) => {
   const notify = () =>
     toast.success("Product Added To Cart Successfuly !", {
       position: "bottom-right",
