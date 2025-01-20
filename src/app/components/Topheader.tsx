@@ -20,17 +20,17 @@ const TopHeader = () => {
               </Link>
             </li>
             <li>
-              <Link href="/DynamicRoutes/gethelp" className="hover:underline">
+              <Link href="/gethelp" className="hover:underline">
                 Help |
               </Link>
             </li>
             <li>
-              <Link href="/DynamicRoutes/signup" className="hover:underline">
+              <Link href="/signup" className="hover:underline">
                 Join Us |
               </Link>
             </li>
             <li>
-              <Link href="/DynamicRoutes/signin" className="hover:underline">
+              <Link href="/signin" className="hover:underline">
                 Sign in
               </Link>
             </li>

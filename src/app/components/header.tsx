@@ -8,9 +8,11 @@ import { FaRegHeart } from "react-icons/fa6";
 import { IoBagHandleOutline } from "react-icons/io5";
 import * as Dialog from "@radix-ui/react-dialog";
 import { HiMenu } from "react-icons/hi"; // For Hamburger Menu Icon
+import { useAppSelector } from "../store/hooks";
 
 const Header = () => {
   const [open, setOpen] = useState(false); // Track dialog open state
+  const cart = useAppSelector((state)=> state.cart);
 
   return (
     <div className="w-full flex h-[60px] text-black mt-3 px-4 sm:px-6 md:px-8 lg:px-12">
@@ -31,19 +33,19 @@ const Header = () => {
                 <Link href="/DynamicRoutes/featuredPage">News & Featured</Link>
               </li>
               <li>
-                <Link href="/mens">Men</Link>
+                <Link href="/men's clothing">Men</Link>
               </li>
               <li>
-                <Link href="/womens">Women</Link>
+                <Link href="/women's clothing">Women</Link>
               </li>
               <li>
-                <Link href="/kids">Kids</Link>
+                <Link href="/electronics">Kids</Link>
               </li>
               <li>
-                <Link href="/sale">Sale</Link>
+                <Link href="/men's clothing">Sale</Link>
               </li>
               <li>
-                <Link href="/SNKRS">SNKRS</Link>
+                <Link href="/shoes">SNKRS</Link>
               </li>
             </ul>
           </div>
@@ -64,8 +66,13 @@ const Header = () => {
               <FaRegHeart className="text-xl sm:text-2xl" />
             </Link>
 
-            <Link href="/DynamicRoutes/Cartpage">
+            <Link href="/cart" className="relative flex items-center">
               <IoBagHandleOutline className="text-xl sm:text-2xl" />
+              {cart.length >0 && 
+              (<span className="absolute top-0 right-0 translate-x-2/4 -translate-y-2/4 text-[10px] sm:text-xs bg-black text-white rounded-full w-5 h-5 flex items-center justify-center">
+                {cart.length}
+              </span>)}
+             
             </Link>
           </div>
 

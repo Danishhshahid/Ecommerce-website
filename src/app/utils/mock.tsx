@@ -52,7 +52,7 @@ export const products : Product[]=[
         title : "Nike Air Max Pulse",
         slug : "Nike-Air-Max-Pulse-3",
         price : 13995,
-        discount :0,
+        discount :25,
         description : "lloreeeememememememememememememememm",
         size: ["S","M","L","XL"],
         color: ["#ffffff","#000000","#e60000"],

@@ -7,6 +7,7 @@ import { StaticImageData } from "next/image";
 
 const Bestofall = () => {
   const products = useAppSelector((state) => state.products);
+  
 
   // Logic to filter bestselling products
   const bestsell = products.filter((product) => product.isBestSelling);

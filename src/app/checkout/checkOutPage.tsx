@@ -1,13 +1,22 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import React from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import pic1 from "./../../../public/assets/check (1).png";
 import pic2 from "./../../../public/assets/check (2).png";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const Checkoutpage = () => {
+  const cartArray = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+
+  const total = cartArray.reduce((total, array) => {
+    const discount = array.discount ?? 0; // Use 0 if discount is undefined
+    return total + (array.price - (array.price * discount) / 100) * array.qty;
+  }, 0);
   return (
     <div className="w-full min-h-screen  flex justify-center items-center p-4 sm:p-8 text-black">
       <div className="w-full max-w-screen-lg h-full  flex flex-col md:flex-row rounded-lg shadow-lg overflow-hidden">
@@ -214,7 +223,7 @@ const Checkoutpage = () => {
             <div className="mb-4">
               <div className="flex justify-between text-sm">
                 <p>Subtotal</p>
-                <p>₹ 20,890.00</p>
+                <p>${total}</p>
               </div>
               <div className="flex justify-between text-sm">
                 <p>Delivery/Shipping</p>
@@ -225,7 +234,7 @@ const Checkoutpage = () => {
             <div className="mb-6">
               <div className="flex justify-between text-lg font-semibold">
                 <p>Total</p>
-                <p>₹ 20,890.00</p>
+                <p>${total}</p>
               </div>
               <p className="text-xs text-gray-500 mt-1">
                 (The total reflects the price of your order, including all
@@ -241,24 +250,37 @@ const Checkoutpage = () => {
 
             <div className="space-y-6">
               {/* Product List */}
-              <div className="flex items-start space-x-4">
-                <Image
-                  src={pic2}
-                  alt="Product 1"
-                  className="w-20 h-20 object-cover rounded-md"
-                />
-                <div>
-                  <h2 className="text-sm font-medium">
-                    Nike Dri-FIT ADV TechKnit Ultra Men&#39;s Short-Sleeve
-                    Running Top
-                  </h2>
-                  <p className="text-sm text-gray-300">Qty 1</p>
-                  <p className="text-sm text-gray-300">Size L</p>
-                  <p className="text-sm font-medium ">₹ 3,895.00</p>
+              {cartArray.map((item, i) => (
+                <div key={i} className="flex items-start space-x-4">
+                  {item.img && Array.isArray(item.img) ? (
+                    <Image
+                      src={item.img[0]} // Access the first image if it's an array
+                      alt={item.title}
+                      width={200}
+                      height={200}
+                      className="max-w-[150px] max-h-[150px] object-contain"
+                    />
+                  ) : (
+                    <Image
+                      src={item.img as StaticImageData} // Assume it's a StaticImageData
+                      alt={item.title}
+                      width={200}
+                      height={200}
+                      className="max-w-[150px] max-h-[150px] object-contain"
+                    />
+                  )}
+                  <div>
+                    <h2 className="text-sm font-medium">
+                     {item.title}
+                    </h2>
+                    <p className="text-sm text-gray-300">{item.qty}</p>
+                    <p className="text-sm text-gray-300">{item.size}</p>
+                    <p className="text-sm font-medium ">${item.price}</p>
+                  </div>
                 </div>
-              </div>
+              ))}
 
-              <div className="flex items-start space-x-4">
+              {/* <div className="flex items-start space-x-4">
                 <Image
                   src={pic1}
                   alt="Product 2"
@@ -272,7 +294,7 @@ const Checkoutpage = () => {
                   <p className="text-sm text-gray-300">Size UK 8</p>
                   <p className="text-sm font-medium">₹ 16,995.00</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

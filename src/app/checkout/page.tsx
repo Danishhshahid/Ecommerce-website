@@ -1,9 +1,10 @@
 import React from 'react'
-import Checkoutpage from '@/app/components/checkoutpage'
+import Checkoutpage from './checkOutPage'
+
 
 const Checkout = () => {
   return (
-   <Checkoutpage/>
+  <Checkoutpage/>
   )
 }
 

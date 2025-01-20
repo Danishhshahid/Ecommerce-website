@@ -2,8 +2,13 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useAppDispatch } from "../store/hooks";
+import { addToCart } from "../store/features/cart";
+import BSCaddToCart from "./BSCaddToCart";
 
-const BestsellingCard = ({
+const BestsellingCard = (
+  
+  {
   src,
   alt,
   title,
@@ -19,7 +24,12 @@ const BestsellingCard = ({
   price: number;
   category?: string;
   slug: string;
-}) => {
+}
+
+
+) => {
+  const dispatch = useAppDispatch()
+  
   return (
     <div className="flex-shrink-0 flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow mb-6 max-w-sm">
       {/* Image Section */}
@@ -59,9 +69,8 @@ const BestsellingCard = ({
       </Link>
       {/* Action Buttons */}
       <div className="flex justify-center p-4 pt-0 gap-4">
-        <Button className="bg-black text-white hover:bg-gray-900 px-4 py-2">
-          Add to Cart
-        </Button>
+       
+        <BSCaddToCart slug={slug}/>
         <Button className="bg-black text-white hover:bg-gray-900 px-4 py-2">
           Buy Now
         </Button>
