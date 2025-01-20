@@ -30,19 +30,19 @@ const Header = () => {
           <div className="hidden sm:block">
             <ul className="flex gap-4 md:gap-6 lg:gap-8 text-sm md:text-base lg:text-lg">
               <li>
-                <Link href="/DynamicRoutes/featuredPage">News & Featured</Link>
+                <Link href="/featuredPage">News & Featured</Link>
               </li>
               <li>
-                <Link href="/men's clothing">Men</Link>
+                <Link href="/mens">Men</Link>
               </li>
               <li>
-                <Link href="/women's clothing">Women</Link>
+                <Link href="/womens">Women</Link>
               </li>
               <li>
-                <Link href="/electronics">Kids</Link>
+                <Link href="/kids">Kids</Link>
               </li>
               <li>
-                <Link href="/men's clothing">Sale</Link>
+                <Link href="/mens">Sale</Link>
               </li>
               <li>
                 <Link href="/shoes">SNKRS</Link>
