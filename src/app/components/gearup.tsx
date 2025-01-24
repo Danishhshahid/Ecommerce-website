@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { StaticImageData } from "next/image";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
 import BestsellingCard from "./ProductCard";
-import { getProducts } from "../../app/store/features/product"; // Add this import
 import { ProductType } from "../../../type/product";
 import { client } from "@/sanity/lib/client";
 import { bestofall } from "@/sanity/lib/queries";
@@ -14,7 +11,6 @@ const Gearup = () => {
 
 
   const [products,setproduct]=useState<ProductType[]>([])
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     async function fetchProducts() {
@@ -131,7 +127,6 @@ const Gearup = () => {
                         price={item.price}
                         category={item.description}
                         slug={item.slug.current}
-                        product={item}
                       />
                     </div>
                   );
@@ -185,7 +180,6 @@ const Gearup = () => {
                         price={item.price}
                         category={item.description}
                         slug={item.slug.current}
-                        product={item}
                       />
                     </div>
                   );

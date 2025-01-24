@@ -3,13 +3,11 @@ import SlugPage from './slugPage'; // Correct import path
 import { ProductType } from '../../../../type/product'; // Assuming you have this type defined
 
 interface ProductPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string; }>; 
 }
 
 export default async function Page({ params }: ProductPageProps) {
-  const { slug } = await params; // Destructuring params after it's resolved
+  const { slug } =await params; // Direct access to slug
 
   // Fetch the product data from Sanity (async operation)
   let product: ProductType | null = null;

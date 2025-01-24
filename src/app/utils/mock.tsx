@@ -22,7 +22,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
       // console.log('Fetched products:', products);
       return products;
     } catch (error) {
-      // console.error('Error fetching products:', error);
+      console.error('Error fetching products:', error);
       return [];
     }
   };

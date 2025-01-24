@@ -1,9 +1,7 @@
 "use client";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import BestsellingCard from "./ProductCard";
-import { getProducts } from '../../app/store/features/product'; // Add this import
 import { urlFor } from "@/sanity/lib/image";
-import  SanityImageSource  from "@sanity/image-url";
 import { useEffect, useRef, useState } from "react";
 import { ProductType } from "../../../type/product";
 import { client } from "@/sanity/lib/client";
@@ -94,7 +92,6 @@ useEffect(() => {
                 price={item.price}
                 category={item.description}
                 slug={item.slug.current}
-                product ={item}
               />
             </div>
           );

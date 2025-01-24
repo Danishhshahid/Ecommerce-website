@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import BSCaddToCart from "./BSCaddToCart";
+// import BSCaddToCart from "./BSCaddToCart";
 
 // Function to clean and generate URL-safe slug
 
@@ -17,7 +17,6 @@ const BestsellingCard = (
     price,
     category,
     slug,
-    product,
   }: {
     src: string;
     alt: string;
@@ -26,7 +25,6 @@ const BestsellingCard = (
     price: number;
     category?: string;
     slug: string;
-    product : any;
   }
 ) => {
   // const cleanSlug = generateSlug(title); // Clean the slug for URL

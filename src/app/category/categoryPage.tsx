@@ -3,7 +3,6 @@
 import BestsellingCard from "./../components/ProductCard";
 import { useAppSelector } from "../store/hooks";
 import React from "react";
-import { StaticImageData } from "next/image";
 
 const CategoryPage = ({
   params,
@@ -31,7 +30,7 @@ const CategoryPage = ({
       {/* Product Grid Section */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {bestsell.map((item, i) => {
-          let imageSrc = item.imageUrl;
+          const imageSrc = item.imageUrl;
 
           // if (Array.isArray(item.imageUrl)) {
           //   imageSrc = item.imageUrl || "";
@@ -54,6 +53,7 @@ const CategoryPage = ({
                 category={item.category}
                 description={item.description}
                 slug={item.slug}
+                
               />
             </div>
           );

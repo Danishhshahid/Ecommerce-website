@@ -6,7 +6,7 @@ import Cartpage from './cartPage';
 const Page = () => {
   return (
     <div>
-        <Cartpage/>
+        <Cartpage />
     </div>
   )
 }

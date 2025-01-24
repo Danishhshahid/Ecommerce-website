@@ -6,8 +6,6 @@ import { BsCart3 } from 'react-icons/bs';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { ProductType } from '../../../../type/product';
 import { urlFor } from '@/sanity/lib/image';
-import AddToCartToastify, { CartItem } from '@/app/components/AddToCartToastify';
-import { useAppDispatch } from '@/app/store/hooks';
 import { addToCart } from '@/app/store/features/cart';
 import { Flip, toast, ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';

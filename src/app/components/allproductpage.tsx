@@ -1,11 +1,9 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LuSettings2 } from "react-icons/lu";
 import { IoIosArrowForward, IoIosMenu } from "react-icons/io";
 import Link from "next/link";
-import { StaticImageData } from "next/image";
 import BestsellingCard from "./ProductCard";
-import { useAppSelector } from "../store/hooks";
 import { ProductType } from "../../../type/product";
 import { client } from "@/sanity/lib/client";
 import { allproducts } from "@/sanity/lib/queries";
@@ -13,7 +11,6 @@ import { urlFor } from "@/sanity/lib/image";
 
 const Allproductpage = () => {
   const [products,setproduct]=useState<ProductType[]>([])
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     async function fetchProducts() {
@@ -202,7 +199,6 @@ const Allproductpage = () => {
                       price={items.price}
                       category={items.category}
                       slug={items.slug.current}
-                      product={items}
                     />
                   </div>
                 );

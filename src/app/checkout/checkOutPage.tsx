@@ -1,11 +1,12 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import {  useAppSelector } from "../store/hooks";
+import { urlFor } from "@/sanity/lib/image";
 
 const Checkoutpage = () => {
   const cartArray = useAppSelector((state) => state.cart);
@@ -260,7 +261,7 @@ const Checkoutpage = () => {
                     />
                   ) : (
                     <Image
-                      src={item.img as StaticImageData} // Assume it's a StaticImageData
+                      src={urlFor(item.img).url()} 
                       alt={item.title}
                       width={200}
                       height={200}
