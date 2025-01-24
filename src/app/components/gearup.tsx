@@ -1,20 +1,54 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StaticImageData } from "next/image";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import BestsellingCard from "./ProductCard";
+import { getProducts } from "../../app/store/features/product"; // Add this import
+import { ProductType } from "../../../type/product";
+import { client } from "@/sanity/lib/client";
+import { bestofall } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 const Gearup = () => {
-  const products = useAppSelector((state) => state.products);
 
-  // Logic to filter bestselling products
-  const productdata = products.filter((product) => product.isGearUp);
- 
 
+  const [products,setproduct]=useState<ProductType[]>([])
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const fetchedProduct: ProductType[] = await client.fetch(bestofall);
+        setproduct(fetchedProduct); 
+        // console.log(setproduct)
+        // Set the fetched products correctly
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+    fetchProducts();
+  }, []);
+  // const dispatch = useAppDispatch();
   const mensScrollContainerRef = useRef<HTMLDivElement>(null);
   const womensScrollContainerRef = useRef<HTMLDivElement>(null);
+  // const products = useAppSelector((state) => state.products.products);
+  // const status = useAppSelector((state) => state.products.status);
+  // useEffect(() => {
+  //   dispatch(getProducts());
+  // }, [dispatch]);
 
+  // Logic to filter bestselling products
+  // // const productdata = products.filter((product) => product.isGearUp);
+  // if (status === "loading") {
+  //   return <div>Loading products...</div>;
+  // }
+
+  // if (status === "failed" || products.length === 0) {
+  //   return <div>No products available</div>;
+  // }
+
+ 
   const handleScroll = (
     direction: "left" | "right",
     section: "mens" | "womens"
@@ -79,37 +113,29 @@ const Gearup = () => {
               {/* Render Men's Items */}
               <div
                 ref={mensScrollContainerRef}
-                className="w-full mt-2 flex h-[450px] gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
+                className="w-full mt-2 flex h-auto items-center  gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
               >
-                {productdata
-                  .filter((item) => item.category === "mens")
-                  .map((item, i) => {
-                    let imageSrc: string = "";
+                {products.map((item, i) => {
+                  const imageUrl = item.image ? urlFor(item.image).url() : "/assets/default-placeholder.png"; // Fallback to a placeholder image
 
-                    if (Array.isArray(item.img)) {
-                      imageSrc = item.img[0] || "";
-                    } else if (item.img && (item.img as StaticImageData).src) {
-                      imageSrc = (item.img as StaticImageData).src;
-                    } else {
-                      imageSrc = "/assets/default-placeholder.png";
-                    }
 
-                    return (
-                      <div
-                        key={i}
-                        className="transition-transform transform hover:scale-105 w-[350px]"
-                      >
-                        <BestsellingCard
-                          src={imageSrc}
-                          alt={item.title}
-                          title={item.title}
-                          price={item.price}
-                          category={item.description}
-                          slug={item.slug}
-                        />
-                      </div>
-                    );
-                  })}
+                  return (
+                    <div
+                      key={i}
+                      className="transition-transform transform hover:scale-105 w-[350px]"
+                    >
+                      <BestsellingCard
+                        src={imageUrl}
+                        alt={item.productName}
+                        title={item.productName}
+                        price={item.price}
+                        category={item.description}
+                        slug={item.slug.current}
+                        product={item}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -141,37 +167,29 @@ const Gearup = () => {
               {/* Render Women's Items */}
               <div
                 ref={womensScrollContainerRef}
-                className="w-full mt-2 flex h-[450px] gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
+                className="w-full mt-2 flex h-auto items-center gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
               >
-                {productdata
-                  .filter((item) => item.category === "womens")
-                  .map((item, i) => {
-                    let imageSrc: string = "";
+                {products.map((item, i) => {
+  const imageUrl = item.image ? urlFor(item.image).url() : "/assets/default-placeholder.png"; // Fallback to a placeholder image
 
-                    if (Array.isArray(item.img)) {
-                      imageSrc = item.img[0] || "";
-                    } else if (item.img && (item.img as StaticImageData).src) {
-                      imageSrc = (item.img as StaticImageData).src;
-                    } else {
-                      imageSrc = "/assets/default-placeholder.png";
-                    }
 
-                    return (
-                      <div
-                        key={i}
-                        className="transition-transform transform hover:scale-105 w-[350px]"
-                      >
-                        <BestsellingCard
-                          src={imageSrc}
-                          alt={item.title}
-                          title={item.title}
-                          price={item.price}
-                          category={item.description}
-                          slug={item.slug}
-                        />
-                      </div>
-                    );
-                  })}
+                  return (
+                    <div
+                      key={i}
+                      className="transition-transform transform hover:scale-105 w-[350px]"
+                    >
+                      <BestsellingCard
+                        src={imageUrl}
+                        alt={item.productName}
+                        title={item.productName}
+                        price={item.price}
+                        category={item.description}
+                        slug={item.slug.current}
+                        product={item}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

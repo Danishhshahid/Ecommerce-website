@@ -1,8 +1,9 @@
 import { StaticImageData } from "next/image";
-export type Product = {
-  id: number;
-  title: string;
-  img: string[] | StaticImageData | undefined;
+export type Product  ={
+ 
+  _id:string;
+  productName: string; 
+  imageUrl: string;
   slug: string;
   price: number;
   category: string;
@@ -11,15 +12,15 @@ export type Product = {
   color: string[];
   qty: number;
   discount?: number;
-  isBestSelling? :boolean
-  isGearUp? : boolean
+  isBestSelling?: boolean;
+  isGearUp?: boolean;
 };
 export type Cart = {
   name: string;
   description: string;
   id: number;
   title: string;
-  img: string[] | StaticImageData | undefined;
+  img :string,
   slug: string;
   price: number;
   category: string; 

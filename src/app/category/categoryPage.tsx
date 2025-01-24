@@ -8,12 +8,12 @@ import { StaticImageData } from "next/image";
 const CategoryPage = ({
   params,
 }: {
-  params: Promise<{ category: string }>;
+  params: { category: string };
 }) => {
-  const { category } = React.use(params);
+  const { category } =params;
 
   // Fetch the products from the Redux store
-  const product = useAppSelector((state) => state.products);
+  const product = useAppSelector((state) => state.products.products);
 
   // Filter products based on category
   const bestsell = product.filter((val) => val.category === category);
@@ -31,15 +31,15 @@ const CategoryPage = ({
       {/* Product Grid Section */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {bestsell.map((item, i) => {
-          let imageSrc: string = "";
+          let imageSrc = item.imageUrl;
 
-          if (Array.isArray(item.img)) {
-            imageSrc = item.img[0] || "";
-          } else if (item.img && (item.img as StaticImageData).src) {
-            imageSrc = (item.img as StaticImageData).src;
-          } else {
-            imageSrc = "/assets/default-placeholder.png";
-          }
+          // if (Array.isArray(item.imageUrl)) {
+          //   imageSrc = item.imageUrl || "";
+          // } else if (item.imageUrl && (item.imageUrl as StaticImageData).src) {
+          //   imageSrc = (item.img as StaticImageData).src;
+          // } else {
+          //   imageSrc = "/assets/default-placeholder.png";
+          // }
 
           return (
             <div
@@ -48,8 +48,8 @@ const CategoryPage = ({
             >
               <BestsellingCard
                 src={imageSrc}
-                alt={item.title}
-                title={item.title}
+                alt={item.productName}
+                title={item.productName}
                 price={item.price}
                 category={item.category}
                 description={item.description}

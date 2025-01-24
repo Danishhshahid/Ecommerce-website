@@ -1,17 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { LuSettings2 } from "react-icons/lu";
 import { IoIosArrowForward, IoIosMenu } from "react-icons/io";
 import Link from "next/link";
 import { StaticImageData } from "next/image";
 import BestsellingCard from "./ProductCard";
 import { useAppSelector } from "../store/hooks";
+import { ProductType } from "../../../type/product";
+import { client } from "@/sanity/lib/client";
+import { allproducts } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 const Allproductpage = () => {
-  const products = useAppSelector((state) => state.products);
-
-  // Logic to filter bestselling products
-  const bestsell = products.filter((product) => product);
+  const [products,setproduct]=useState<ProductType[]>([])
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const fetchedProduct: ProductType[] = await client.fetch(allproducts);
+        setproduct(fetchedProduct); 
+        // console.log(setproduct)
+        // Set the fetched products correctly
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+    fetchProducts();
+  }, []);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for the sidebar toggle
 
@@ -162,16 +178,17 @@ const Allproductpage = () => {
           {/* Product Grid Section */}
           <div className="w-full lg:w-[80%] h-full pl-0 lg:pl-6 flex flex-col">
             <div className="w-full mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {bestsell.map((items, i) => {
-                let imageSrc: string = "";
+              {products.map((items, i) => {
+                  const imageUrl = items.image ? urlFor(items.image).url() : "/assets/default-placeholder.png"; // Fallback to a placeholder image
+                
 
-                if (Array.isArray(items.img)) {
-                  imageSrc = items.img[0] || "";
-                } else if (items.img && (items.img as StaticImageData).src) {
-                  imageSrc = (items.img as StaticImageData).src;
-                } else {
-                  imageSrc = "/assets/default-placeholder.png";
-                }
+                // if (Array.isArray(items.img)) {
+                //   imageSrc = items.img[0] || "";
+                // } else if (items.img && (items.img as StaticImageData).src) {
+                //   imageSrc = (items.img as StaticImageData).src;
+                // } else {
+                //   imageSrc = "/assets/default-placeholder.png";
+                // }
 
                 return (
                   <div
@@ -179,12 +196,13 @@ const Allproductpage = () => {
                     className="transition-transform transform hover:scale-105"
                   >
                     <BestsellingCard
-                      src={imageSrc}
-                      alt={items.title}
-                      title={items.title}
+                      src={imageUrl}
+                      alt={items.productName}
+                      title={items.productName}
                       price={items.price}
                       category={items.category}
-                      slug={items.slug}
+                      slug={items.slug.current}
+                      product={items}
                     />
                   </div>
                 );

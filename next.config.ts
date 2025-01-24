@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ['cdn.sanity.io'],  // Add 'cdn.sanity.io' to allowed domains for images
+  },
 };
 
 export default nextConfig;

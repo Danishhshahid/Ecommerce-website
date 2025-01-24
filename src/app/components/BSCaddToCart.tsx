@@ -13,21 +13,25 @@ import "react-toastify/dist/ReactToastify.css";
 import { BsCart3 } from "react-icons/bs";
 
 const BSCaddToCart = ({ slug }: { slug: string }) => {
-  const product = useAppSelector((state) => state.products).find(
+  const product = useAppSelector((state) => state.products.products).find(
     (val) => val.slug === slug
   );
 
+  // Ensure product and arrays are not undefined before accessing their values
+  const defaultSize = product?.size?.[0] || ''; // Set default empty string if size is empty or undefined
+  const defaultColor = product?.color?.[0] || ''; // Set default empty string if color is empty or undefined
+
   const [cartItem, setCartItem] = useState({
-    id: product?.id,
-    title: product?.title,
-    img: product?.img,
+    id: product?._id,
+    title: product?.productName,
+    img: product?.imageUrl,
     slug: product?.slug,
     price: product?.price,
     category: product?.category,
-    size: product?.size[0],
+    size: defaultSize,
     qty: product?.qty,
     discount: product?.discount,
-    color: product?.color[0],
+    color: defaultColor,
   });
 
   const dispatch = useAppDispatch();
@@ -92,14 +96,14 @@ const BSCaddToCart = ({ slug }: { slug: string }) => {
               <option disabled defaultValue={"Select Size"}>
                 Select Size
               </option>
-              {product?.size.map((item, i) => (
+              {product?.size?.map((item, i) => (
                 <option key={i}>{item}</option>
               ))}
             </select>
           </div>
           <div className="flex gap-3 mt-5">
             Color:
-            {product?.color.map((item, i) => (
+            {product?.color?.map((item, i) => (
               <div key={i}>
                 <Button
                   onClick={() => setCartItem({ ...cartItem, color: item })}

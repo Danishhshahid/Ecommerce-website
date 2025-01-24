@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,17 +7,21 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
 import { useAppSelector, useAppDispatch } from "@/app/store/hooks";
 import { delItem } from "../store/features/cart";
+import { urlFor } from "@/sanity/lib/image";
 
 const Cartpage = () => {
   const cartArray = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const total = cartArray.reduce((total, array) => {
-    const discount = array.discount ?? 0; // Use 0 if discount is undefined
-    return total + (array.price - (array.price * discount) / 100) * array.qty;
-  }, 0);
+    const price = array.price ?? 0; // Ensure price defaults to 0 if undefined or null
+    const discount = array.discount ?? 0; // Ensure discount defaults to 0 if undefined or null
+    const qty = array.qty ?? 1; // Ensure quantity defaults to 1 if undefined or null
 
-  
+    // Calculate the price after applying discount
+    const discountedPrice = price - (price * discount) / 100;
+    return total + discountedPrice * qty;
+  }, 0);
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center px-4 py-6">
@@ -47,29 +51,23 @@ const Cartpage = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold">Bag</h1>
-                {cartArray.map((item) => (
+                {cartArray.map((item, i) => (
                   <div
-                    key={item.id}
+                    key={i}
                     className="flex flex-col md:flex-row gap-4 border-b py-4"
                   >
                     <div className="w-full md:w-[50%] flex justify-center items-center">
-                      {item.img && Array.isArray(item.img) ? (
-                        <Image
-                          src={item.img[0]} // Access the first image if it's an array
-                          alt={item.title}
-                          width={200}
-                          height={200}
-                          className="max-w-[150px] max-h-[150px] object-contain"
-                        />
-                      ) : (
-                        <Image
-                          src={item.img as StaticImageData} // Assume it's a StaticImageData
-                          alt={item.title}
-                          width={200}
-                          height={200}
-                          className="max-w-[150px] max-h-[150px] object-contain"
-                        />
-                      )}
+                      <Image
+                        src={
+                          item.img
+                            ? urlFor(item.img).url()
+                            : "/placeholder-image.jpg"
+                        }
+                        alt={item.title || "Product Image"} // Add fallback text
+                        width={200}
+                        height={200}
+                        className="max-w-[150px] max-h-[150px] object-contain"
+                      />
                     </div>
                     <div className="w-full flex flex-col gap-4">
                       <div className="flex justify-between">
@@ -99,9 +97,10 @@ const Cartpage = () => {
                         <Link href={"/"}>
                           <FaRegHeart />
                         </Link>
-                        
-                          <RiDeleteBin6Line onClick={()=> dispatch(delItem(item.uuid))}  />
-                        
+
+                        <RiDeleteBin6Line
+                          onClick={() => dispatch(delItem(item.uuid))}
+                        />
                       </div>
                     </div>
                   </div>
@@ -114,7 +113,7 @@ const Cartpage = () => {
               <h1 className="text-2xl font-bold">Summary</h1>
               <div className="flex justify-between">
                 <p>Subtotal</p>
-                <p>{`$ ${total.toFixed(2)}`}</p>
+                <p>{`$ ${total}`}</p>
               </div>
               <div className="flex justify-between">
                 <p>Discount</p>
@@ -126,7 +125,7 @@ const Cartpage = () => {
               </div>
               <div className="flex justify-between font-bold">
                 <p>Total</p>
-                <p>${total.toFixed(2)}</p>
+                <p>${total}</p>
               </div>
               <Link href={"/checkout"}>
                 <Button className="rounded-full w-full py-3 text-sm font-semibold bg-green-600 text-white">

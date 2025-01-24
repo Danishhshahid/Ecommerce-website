@@ -8,12 +8,13 @@ import Footerhead from "./components/footerhead";
 import Gearup from "./components/gearup";
 
 import Hero from "./components/hero";
+// import Getproducts from "./components/getproducts";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      
+      {/* <Getproducts/> */}
       <Bestofall />
       <Featured />
       <Gearup />

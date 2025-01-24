@@ -1,37 +1,41 @@
+"use client"
+
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import BSCaddToCart from "./BSCaddToCart";
 
+// Function to clean and generate URL-safe slug
+
 const BestsellingCard = (
-  
   {
-  src,
-  alt,
-  title,
-  description,
-  price,
-  category,
-  slug,
-}: {
-  src: string;
-  alt: string;
-  title: string;
-  description?: string;
-  price: number;
-  category?: string;
-  slug: string;
-}
-
-
+    src,
+    alt,
+    title,
+    description,
+    price,
+    category,
+    slug,
+    product,
+  }: {
+    src: string;
+    alt: string;
+    title: string;
+    description?: string;
+    price: number;
+    category?: string;
+    slug: string;
+    product : any;
+  }
 ) => {
-  
+  // const cleanSlug = generateSlug(title); // Clean the slug for URL
+
   return (
     <div className="flex-shrink-0 flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow mb-6 max-w-sm">
       {/* Image Section */}
-      <Link href={`/${category}/${slug}`}>
-        <div className="w-full h-60 bg-gray-50 rounded-t-lg overflow-hidden">
+      <Link href={`/product/${typeof slug === "string" ? slug : ""}`}>
+      <div className="w-full h-60 bg-gray-50 rounded-t-lg overflow-hidden">
           <Image
             src={src}
             alt={alt}
@@ -63,15 +67,18 @@ const BestsellingCard = (
             )}
           </div>
         </div>
-      </Link>
+
       {/* Action Buttons */}
       <div className="flex justify-center p-4 pt-0 gap-4">
-       
-        <BSCaddToCart slug={slug}/>
+        
+        <Button className="bg-black text-white hover:bg-gray-900 px-4 py-2">
+          View Product
+        </Button>
         <Button className="bg-black text-white hover:bg-gray-900 px-4 py-2">
           Buy Now
         </Button>
       </div>
+      </Link>
     </div>
   );
 };

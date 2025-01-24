@@ -9,6 +9,14 @@ export const productSchema = {
         type: 'string',
       },
       {
+        name: 'slug',
+        title: 'slug',
+        type: 'slug',
+        options:{
+          source : "productName",          
+        }
+      },
+      {
         name: 'category',
         title: 'Category',
         type: 'string',
