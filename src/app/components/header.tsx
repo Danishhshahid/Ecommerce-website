@@ -36,16 +36,19 @@ const Header = () => {
                 <Link href="/Men's-Shoes">Men</Link>
               </li>
               <li>
-                <Link href="/womens">Women</Link>
+                <Link href="/Women's-Shoes">Women</Link>
               </li>
               <li>
-                <Link href="/kids">Kids</Link>
+                <Link href="/kid's-Shoes">Kids</Link>
               </li>
               <li>
                 <Link href="/mens">Sale</Link>
               </li>
               <li>
                 <Link href="/shoes">SNKRS</Link>
+              </li>
+              <li>
+                <Link href="/allproducts">Store</Link>
               </li>
             </ul>
           </div>
@@ -102,7 +105,7 @@ const Header = () => {
                 </Dialog.Description>
 
                 <div className="flex flex-col gap-4">
-                  <Link href="/DynamicRoutes/allproducts">All Products</Link>
+                  <Link href="/allproducts">All Products</Link>
                   <Link href="/DynamicRoutes/featuredPage">
                     News & Featured
                   </Link>

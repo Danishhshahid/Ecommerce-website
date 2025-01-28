@@ -8,23 +8,31 @@ import { ProductType } from "../../../type/product";
 import { client } from "@/sanity/lib/client";
 import { allproducts } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
+import PaginationComponent from "./pagination";
 
 const Allproductpage = () => {
-  const [products,setproduct]=useState<ProductType[]>([])
-  
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [productsPerPage] = useState(12); // Number of products per page
+
   useEffect(() => {
     async function fetchProducts() {
       try {
         const fetchedProduct: ProductType[] = await client.fetch(allproducts);
-        setproduct(fetchedProduct); 
-        // console.log(setproduct)
-        // Set the fetched products correctly
+        setProducts(fetchedProduct);
+        console.log(fetchedProduct)
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     }
     fetchProducts();
   }, []);
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for the sidebar toggle
 
@@ -174,24 +182,11 @@ const Allproductpage = () => {
 
           {/* Product Grid Section */}
           <div className="w-full lg:w-[80%] h-full pl-0 lg:pl-6 flex flex-col">
-            <div className="w-full mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((items, i) => {
-                  const imageUrl = items.image ? urlFor(items.image).url() : "/assets/default-placeholder.png"; // Fallback to a placeholder image
-                
-
-                // if (Array.isArray(items.img)) {
-                //   imageSrc = items.img[0] || "";
-                // } else if (items.img && (items.img as StaticImageData).src) {
-                //   imageSrc = (items.img as StaticImageData).src;
-                // } else {
-                //   imageSrc = "/assets/default-placeholder.png";
-                // }
-
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+              {currentProducts.map((items, i) => {
+                const imageUrl = items.image ? urlFor(items.image).url() : "/assets/default-placeholder.png"; // Fallback to a placeholder image
                 return (
-                  <div
-                    key={i}
-                    className="transition-transform transform hover:scale-105"
-                  >
+                  <div key={i} className="transition-transform transform hover:scale-105 md:max-w-[310px]">
                     <BestsellingCard
                       src={imageUrl}
                       alt={items.productName}
@@ -204,6 +199,13 @@ const Allproductpage = () => {
                 );
               })}
             </div>
+
+            {/* Pagination Component */}
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={Math.ceil(products.length / productsPerPage)}
+              onPageChange={paginate}
+            />
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 export interface ProductType{
     discount?: number | undefined;
     inventory:number ;
@@ -10,7 +9,7 @@ export interface ProductType{
     description?:string,
     price:number,
     category:string,
-    image? :{
+    image:{
         asset :{
             _ref : string;
             _image : "image";

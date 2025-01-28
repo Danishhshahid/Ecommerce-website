@@ -1,74 +1,78 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import BestsellingCard from "./ProductCard";
 import { ProductType } from "../../../type/product";
 import { client } from "@/sanity/lib/client";
 import { bestofall } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  
+  
+} from "@/components/ui/carousel";
 
 const Gearup = () => {
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [mensApi, setMensApi] = useState<CarouselApi | undefined>(); // Carousel API instance for Men's section
+  const [womensApi, setWomensApi] = useState<CarouselApi | undefined>(); // Carousel API instance for Women's section
+  const [mensSelectedIndex, setMensSelectedIndex] = useState(0); // Active slide index for Men's section
+  const [womensSelectedIndex, setWomensSelectedIndex] = useState(0); // Active slide index for Women's section
 
-
-  const [products,setproduct]=useState<ProductType[]>([])
-  
   useEffect(() => {
     async function fetchProducts() {
       try {
         const fetchedProduct: ProductType[] = await client.fetch(bestofall);
-        setproduct(fetchedProduct); 
-        // console.log(setproduct)
-        // Set the fetched products correctly
+        setProducts(fetchedProduct);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     }
     fetchProducts();
   }, []);
-  // const dispatch = useAppDispatch();
-  const mensScrollContainerRef = useRef<HTMLDivElement>(null);
-  const womensScrollContainerRef = useRef<HTMLDivElement>(null);
-  // const products = useAppSelector((state) => state.products.products);
-  // const status = useAppSelector((state) => state.products.status);
-  // useEffect(() => {
-  //   dispatch(getProducts());
-  // }, [dispatch]);
 
-  // Logic to filter bestselling products
-  // // const productdata = products.filter((product) => product.isGearUp);
-  // if (status === "loading") {
-  //   return <div>Loading products...</div>;
-  // }
+  // Autoplay functionality for Men's section
+  useEffect(() => {
+    if (!mensApi) return;
 
-  // if (status === "failed" || products.length === 0) {
-  //   return <div>No products available</div>;
-  // }
+    const interval = setInterval(() => {
+      mensApi.scrollNext(); // Move to the next slide
+    }, 2000); // 2 seconds interval
 
- 
-  const handleScroll = (
-    direction: "left" | "right",
-    section: "mens" | "womens"
-  ) => {
-    const scrollAmount = 300; // Amount to scroll
-    const scrollContainer =
-      section === "mens"
-        ? mensScrollContainerRef.current
-        : womensScrollContainerRef.current;
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [mensApi]);
 
-    if (scrollContainer) {
-      if (direction === "left") {
-        scrollContainer.scrollBy({
-          left: -scrollAmount,
-          behavior: "smooth",
-        });
-      } else {
-        scrollContainer.scrollBy({
-          left: scrollAmount,
-          behavior: "smooth",
-        });
-      }
-    }
-  };
+  // Autoplay functionality for Women's section
+  useEffect(() => {
+    if (!womensApi) return;
+
+    const interval = setInterval(() => {
+      womensApi.scrollNext(); // Move to the next slide
+    }, 2000); // 2 seconds interval
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [womensApi]);
+
+  // Handle slide change for Men's section
+  useEffect(() => {
+    if (!mensApi) return;
+
+    mensApi.on("select", () => {
+      setMensSelectedIndex(mensApi.selectedScrollSnap()); // Update active slide index
+    });
+  }, [mensApi]);
+
+  // Handle slide change for Women's section
+  useEffect(() => {
+    if (!womensApi) return;
+
+    womensApi.on("select", () => {
+      setWomensSelectedIndex(womensApi.selectedScrollSnap()); // Update active slide index
+    });
+  }, [womensApi]);
 
   return (
     <div className="w-full h-auto flex flex-col mt-6 px-4 sm:px-6 lg:px-12 mb-6">
@@ -81,7 +85,7 @@ const Gearup = () => {
         </div>
 
         {/* Content */}
-        <div className="w-full flex flex-wrap justify-between">
+        <div className="w-full flex flex-wrap justify-between gap-6">
           {/* Left Section (Men's) */}
           <div className="w-full md:w-[48%]">
             <div className="flex flex-col gap-4">
@@ -92,13 +96,13 @@ const Gearup = () => {
                 </p>
                 <div className="flex gap-6">
                   <button
-                    onClick={() => handleScroll("left", "mens")}
+                    onClick={() => mensApi?.scrollPrev()}
                     className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200"
                   >
                     <IoIosArrowBack />
                   </button>
                   <button
-                    onClick={() => handleScroll("right", "mens")}
+                    onClick={() => mensApi?.scrollNext()}
                     className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200"
                   >
                     <IoIosArrowForward />
@@ -106,31 +110,54 @@ const Gearup = () => {
                 </div>
               </div>
 
-              {/* Render Men's Items */}
-              <div
-                ref={mensScrollContainerRef}
-                className="w-full mt-2 flex h-auto items-center  gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
+              {/* Shadcn Carousel for Men's Section */}
+              <Carousel
+                setApi={setMensApi} // Set the carousel API instance
+                opts={{
+                  align: "start",
+                  loop: true,
+                  dragFree: true, // Enable smooth scrolling on touch devices
+                }}
+                className="w-full"
               >
-                {products.map((item, i) => {
-                  const imageUrl = item.image ? urlFor(item.image).url() : "/assets/default-placeholder.png"; // Fallback to a placeholder image
+                <CarouselContent>
+                  {products.map((item, i) => {
+                    const imageUrl = item.image
+                      ? urlFor(item.image).url()
+                      : "/assets/default-placeholder.png"; // Fallback to a placeholder image
 
+                    return (
+                      <CarouselItem
+                        key={i}
+                        className="basis-[80%] sm:basis-1/1 md:basis-1/2 lg:basis-1/2" // Adjust for mobile screens
+                        >
+                        <div className="transition-transform transform hover:scale-105">
+                          <BestsellingCard
+                            src={imageUrl}
+                            alt={item.productName}
+                            title={item.productName}
+                            price={item.price}
+                            category={item.description}
+                            slug={item.slug.current}
+                          />
+                        </div>
+                      </CarouselItem>
+                    );
+                  })}
+                </CarouselContent>
+              </Carousel>
 
-                  return (
-                    <div
-                      key={i}
-                      className="transition-transform transform hover:scale-105 w-[350px]"
-                    >
-                      <BestsellingCard
-                        src={imageUrl}
-                        alt={item.productName}
-                        title={item.productName}
-                        price={item.price}
-                        category={item.description}
-                        slug={item.slug.current}
-                      />
-                    </div>
-                  );
-                })}
+              {/* Custom Pagination Dots for Men's Section */}
+              <div className="flex justify-center gap-2 mt-4">
+                {products.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => mensApi?.scrollTo(index)} // Scroll to the selected slide
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      mensSelectedIndex === index ? "bg-black" : "bg-gray-300"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -145,13 +172,13 @@ const Gearup = () => {
                 </p>
                 <div className="flex gap-6">
                   <button
-                    onClick={() => handleScroll("left", "womens")}
+                    onClick={() => womensApi?.scrollPrev()}
                     className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200"
                   >
                     <IoIosArrowBack />
                   </button>
                   <button
-                    onClick={() => handleScroll("right", "womens")}
+                    onClick={() => womensApi?.scrollNext()}
                     className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200"
                   >
                     <IoIosArrowForward />
@@ -159,31 +186,54 @@ const Gearup = () => {
                 </div>
               </div>
 
-              {/* Render Women's Items */}
-              <div
-                ref={womensScrollContainerRef}
-                className="w-full mt-2 flex h-auto items-center gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
+              {/* Shadcn Carousel for Women's Section */}
+              <Carousel
+                setApi={setWomensApi} // Set the carousel API instance
+                opts={{
+                  align: "start",
+                  loop: true,
+                  dragFree: true, // Enable smooth scrolling on touch devices
+                }}
+                className="w-full"
               >
-                {products.map((item, i) => {
-  const imageUrl = item.image ? urlFor(item.image).url() : "/assets/default-placeholder.png"; // Fallback to a placeholder image
+                <CarouselContent>
+                  {products.map((item, i) => {
+                    const imageUrl = item.image
+                      ? urlFor(item.image).url()
+                      : "/assets/default-placeholder.png"; // Fallback to a placeholder image
 
+                    return (
+                      <CarouselItem
+                        key={i}
+                        className="basis-[80%] sm:basis-1/1 md:basis-1/2 lg:basis-1/2" // Adjust for mobile screens
+                      >
+                        <div className="transition-transform transform hover:scale-105">
+                          <BestsellingCard
+                            src={imageUrl}
+                            alt={item.productName}
+                            title={item.productName}
+                            price={item.price}
+                            category={item.description}
+                            slug={item.slug.current}
+                          />
+                        </div>
+                      </CarouselItem>
+                    );
+                  })}
+                </CarouselContent>
+              </Carousel>
 
-                  return (
-                    <div
-                      key={i}
-                      className="transition-transform transform hover:scale-105 w-[350px]"
-                    >
-                      <BestsellingCard
-                        src={imageUrl}
-                        alt={item.productName}
-                        title={item.productName}
-                        price={item.price}
-                        category={item.description}
-                        slug={item.slug.current}
-                      />
-                    </div>
-                  );
-                })}
+              {/* Custom Pagination Dots for Women's Section */}
+              <div className="flex justify-center gap-2 mt-4">
+                {products.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => womensApi?.scrollTo(index)} // Scroll to the selected slide
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      womensSelectedIndex === index ? "bg-black" : "bg-gray-300"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>

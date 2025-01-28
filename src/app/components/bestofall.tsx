@@ -1,52 +1,58 @@
 "use client";
+
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import BestsellingCard from "./ProductCard";
 import { urlFor } from "@/sanity/lib/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductType } from "../../../type/product";
 import { client } from "@/sanity/lib/client";
 import { bestofall } from "@/sanity/lib/queries";
-
-
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Bestofall = () => {
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [api, setApi] = useState<CarouselApi | undefined>(); // Carousel API instance
+  const [selectedIndex, setSelectedIndex] = useState(0); // Active slide index
 
-const [products,setproduct]=useState<ProductType[]>([])
-const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-useEffect(() => {
-  async function fetchProducts() {
-    try {
-      const fetchedProduct: ProductType[] = await client.fetch(bestofall);
-      setproduct(fetchedProduct); 
-      // console.log(setproduct)
-      // Set the fetched products correctly
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  }
-  fetchProducts();
-}, []);
-
-  
-
-
-  const handleScroll = (direction: "left" | "right") => {
-    const scrollAmount = 300; // Amount to scroll
-    if (scrollContainerRef.current) {
-      if (direction === "left") {
-        scrollContainerRef.current.scrollBy({
-          left: -scrollAmount,
-          behavior: "smooth",
-        });
-      } else {
-        scrollContainerRef.current.scrollBy({
-          left: scrollAmount,
-          behavior: "smooth",
-        });
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const fetchedProduct: ProductType[] = await client.fetch(bestofall);
+        setProducts(fetchedProduct);
+        console.log(fetchedProduct);
+      } catch (error) {
+        console.error("Error fetching products:", error);
       }
     }
-  };
+    fetchProducts();
+  }, []);
+
+  // Autoplay functionality
+  useEffect(() => {
+    if (!api) return;
+
+    const interval = setInterval(() => {
+      api.scrollNext(); // Move to the next slide
+    }, 2000); // 2 seconds interval
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [api]);
+
+  // Handle slide change
+  useEffect(() => {
+    if (!api) return;
+
+    api.on("select", () => {
+      setSelectedIndex(api.selectedScrollSnap()); // Update active slide index
+    });
+  }, [api]);
 
   return (
     <div className="w-full h-auto flex flex-col gap-6 px-4 sm:px-6 md:px-8 lg:px-12">
@@ -55,47 +61,64 @@ useEffect(() => {
         <h1 className="text-2xl font-semibold">Best of Air Max</h1>
         <div className="flex items-center gap-2">
           <p className="text-sm sm:text-base">Shop</p>
-          <button
-            onClick={() => handleScroll("left")}
-            className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200"
-          >
-            <IoIosArrowBack />
-          </button>
-          <button
-            onClick={() => handleScroll("right")}
-            className="bg-gray-100 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full flex justify-center items-center text-lg sm:text-2xl hover:bg-gray-200"
-          >
-            <IoIosArrowForward />
-          </button>
         </div>
       </div>
 
-      {/* Horizontal Scrollable Product Section */}
-      <div
-        ref={scrollContainerRef}
-        className="w-full mt-5 items-center flex h-auto gap-6 overflow-x-auto overflow-y-hidden scroll-smooth"
+      {/* Shadcn Carousel */}
+      <Carousel
+        setApi={setApi} // Set the carousel API instance
+        opts={{
+          align: "start",
+          loop: true,
+          dragFree: true, // Enable smooth scrolling on touch devices
+        }}
+        className="w-full relative"
       >
-        {products.map((item, i) => {
-  // const imageUrl = item.imageUrl || "/assets/default-placeholder.png";
-  const imageUrl = item.image ? urlFor(item.image).url() : "/assets/default-placeholder.png"; // Fallback to a placeholder image
+        <CarouselContent>
+          {products.map((item) => {
+            const imageUrl = item.image
+              ? urlFor(item.image).url()
+              : "/assets/default-placeholder.png"; // Fallback to a placeholder image
 
+            return (
+              <CarouselItem
+                key={item._id}
+                className="basis-[80%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4" // Adjust for mobile screens
+              >
+                <div className="transition-transform transform hover:scale-105 h-auto">
+                  <BestsellingCard
+                    src={imageUrl}
+                    alt={item.productName}
+                    title={item.productName}
+                    price={item.price}
+                    category={item.description}
+                    slug={item.slug.current}
+                  />
+                </div>
+              </CarouselItem>
+            );
+          })}
+        </CarouselContent>
+        {/* Navigation Buttons */}
+        <CarouselPrevious className="hidden sm:flex">
+          <IoIosArrowBack />
+        </CarouselPrevious>
+        <CarouselNext className="hidden sm:flex">
+          <IoIosArrowForward />
+        </CarouselNext>
+      </Carousel>
 
-          return (
-            <div
-              key={i}
-              className="transition-transform transform hover:scale-105 w-[350px]"
-            >
-              <BestsellingCard
-               src={imageUrl}
-                alt={item.productName}
-                title={item.productName}
-                price={item.price}
-                category={item.description}
-                slug={item.slug.current}
-              />
-            </div>
-          );
-        })}
+      {/* Custom Pagination Dots */}
+      <div className="flex justify-center gap-2 mt-4">
+        {products.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => api?.scrollTo(index)} // Scroll to the selected slide
+            className={`w-2 h-2 rounded-full transition-colors ${
+              selectedIndex === index ? "bg-black" : "bg-gray-300"
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
