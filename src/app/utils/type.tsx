@@ -15,9 +15,9 @@ export type Product  ={
   isGearUp?: boolean;
 };
 export type Cart = {
-  name: string;
+  ProductName: string;
   description: string;
-  id: number;
+  _id: number;
   title: string;
   img :string,
   slug: string;

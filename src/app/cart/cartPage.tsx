@@ -51,9 +51,9 @@ const Cartpage = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold">Bag</h1>
-                {cartArray.map((item, i) => (
+                {cartArray.map((item,i) => (
                   <div
-                    key={i}
+                    key={item._id ?? i }
                     className="flex flex-col md:flex-row gap-4 border-b py-4"
                   >
                     <div className="w-full md:w-[50%] flex justify-center items-center">

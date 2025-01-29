@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { BsCart3 } from 'react-icons/bs';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import { ProductType } from '../../../../type/product';
+import { ProductType } from '../../../type/product';
 import { urlFor } from '@/sanity/lib/image';
 import { addToCart } from '@/app/store/features/cart';
 import { Flip, toast, ToastContainer } from 'react-toastify';
@@ -47,10 +47,10 @@ export default function SlugPage({ product }: SlugPageProps) {
   const handleAddToCart = () => {
     // Prepare the cart item with all selected options
     const cartItem: Cart = {
-      name: product.productName,
+      ProductName: product.productName,
       title: product.productName,
       description: product.description || '',
-      id: product._id ? parseInt(product._id) : Math.floor(1000 + Math.random() * 9000),
+      _id: product._id ? parseInt(product._id) : Math.floor(1000 + Math.random() * 9000),
       img: product.image?.asset ? urlFor(product.image.asset).url() || '' : '',
       slug: product.slug.current,
       price: product.price,

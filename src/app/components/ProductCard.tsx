@@ -1,39 +1,73 @@
-"use client"
+"use client";
 
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-// import BSCaddToCart from "./BSCaddToCart";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/app/store/features/cart";
+import { Flip, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Function to clean and generate URL-safe slug
+const BestsellingCard = ({
+  src,
+  alt,
+  title,
+  description,
+  price,
+  category,
+  slug,
 
-const BestsellingCard = (
-  {
-    src,
-    alt,
-    title,
-    description,
-    price,
-    category,
-    slug,
-  }: {
-    src: string;
-    alt: string;
-    title: string;
-    description?: string;
-    price: number;
-    category?: string;
-    slug: string;
-  }
-) => {
-  // const cleanSlug = generateSlug(title); // Clean the slug for URL
+}: {
+  src: string;
+  alt: string;
+  title: string;
+  description?: string;
+  price: number;
+  category?: string;
+  slug: string;
 
-  return (
+}) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    const cartItem = {
+      ProductName: title,
+      title: title,
+      description: description || "",
+      _id: Math.floor(1000 + Math.random() * 9000), // Generate a random ID
+      img: src,
+      slug: slug,
+      price: price,
+      category: category || "",
+      size: "", // No size selection on card
+      qty: 1, // Default quantity is 1
+      discount: 0, // Assuming no discount on the card
+      color: "", // No color selection on card
+      uuid: Math.floor(1000 + Math.random() * 9000),
+    };
+
+    dispatch(addToCart(cartItem));
+
+    toast.success("Product Added To Cart Successfully!", {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      theme: "light",
+      transition: Flip,
+    });
+  };
+
+  return ( 
+   
     <div className="flex-shrink-0 flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow mb-6 max-w-sm">
       {/* Image Section */}
       <Link href={`/product/${typeof slug === "string" ? slug : ""}`}>
-      <div className="w-full h-60 bg-gray-50 rounded-t-lg overflow-hidden">
+        <div className="w-full h-60 bg-gray-50 rounded-t-lg overflow-hidden">
           <Image
             src={src}
             alt={alt}
@@ -65,20 +99,25 @@ const BestsellingCard = (
             )}
           </div>
         </div>
+      </Link>
 
       {/* Action Buttons */}
       <div className="flex justify-center p-4 pt-0 gap-4">
-        
-        <Button className="bg-black text-white hover:bg-gray-900 px-4 py-2">
-          View Product
+        <Button
+          className="bg-black text-white hover:bg-gray-900 px-4 py-2"
+          onClick={handleAddToCart}
+        >
+          Add to Cart
         </Button>
         <Button className="bg-black text-white hover:bg-gray-900 px-4 py-2">
           Buy Now
         </Button>
       </div>
-      </Link>
+
     </div>
-  );
+  )
+ 
+  
 };
 
 export default BestsellingCard;

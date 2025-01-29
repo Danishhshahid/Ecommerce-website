@@ -3,19 +3,46 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import {  useAppSelector } from "../store/hooks";
 import { urlFor } from "@/sanity/lib/image";
+// import { Customerinfo } from "../../type/checkout";
+import checkOut from "@/actions/checkOut";
 
 const Checkoutpage = () => {
   const cartArray = useAppSelector((state) => state.cart);
+  const [customerInfo,setCustomerInfo] =useState({
+    firstName: "",
+    lastName: "",
+    email :"",
+    number :"",
+    address : "",
+    country : "",
+    state : "",
+    })
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setCustomerInfo((customerInfo) => ({
+        ...customerInfo,
+        [name]: value,
+      }));
+    };
+   
+  const handleCheckout =()=>{
+    checkOut(cartArray,customerInfo)
+
+  }
 
 
   const total = cartArray.reduce((total, array) => {
     const discount = array.discount ?? 0; // Use 0 if discount is undefined
     return total + (array.price - (array.price * discount) / 100) * array.qty;
   }, 0);
+
+
+
+
   return (
     <div className="w-full min-h-screen  flex justify-center items-center p-4 sm:p-8 text-black">
       <div className="w-full max-w-screen-lg h-full  flex flex-col md:flex-row rounded-lg shadow-lg overflow-hidden">
@@ -44,11 +71,9 @@ const Checkoutpage = () => {
             <h2 className="text-lg sm:text-xl text-black">
               Enter your name and address:
             </h2>
-            <Input placeholder="First Name" className="w-full my-2" />
-            <Input placeholder="Last Name" className="w-full my-2" />
-            <Input placeholder="Address line 1" className="w-full my-2" />
-            <Input placeholder="Address line 2" className="w-full my-2" />
-            <Input placeholder="Address line 3" className="w-full my-2" />
+            <Input name="firstName" type="text" value={customerInfo.firstName} onChange={handleInputChange} placeholder="First Name" className="w-full my-2" />
+            <Input name="lastName" type="text" value={customerInfo.lastName} onChange={handleInputChange} placeholder="Last Name" className="w-full my-2" />
+            <Input name="address" type="text" value={customerInfo.address} onChange={handleInputChange} placeholder="Address" className="w-full my-2" />
           </div>
           <div className="w-full">
             <div className="flex w-full space-x-4 mb-4 text-black">
@@ -57,7 +82,8 @@ const Checkoutpage = () => {
                 className="w-1/2 px-4 py-2 text-gray-500 border border-gray-300 rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-black"
               />
               <Input
-                placeholder="Locality"
+              name="state" type="text" value={customerInfo.state} onChange={handleInputChange}
+                placeholder="State"
                 className="w-1/2 px-4 py-2 text-gray-500 border border-gray-300 rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-black"
               />
             </div>
@@ -65,26 +91,10 @@ const Checkoutpage = () => {
               <div className="flex gap-4 items-center justify-start max-w-sm mx-auto text-black">
                 {/* Dropdown for countries */}
                 <div className="w-1/2 text-black">
-                  <select
-                    className="w-full border text-black border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    defaultValue=""
-                  >
-                    <option value="" disabled>
-                      State/Territory
-                    </option>
-                    <option value="United States">United States</option>
-                    <option value="India">India</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Australia">Australia</option>
-                  </select>
+                <Input name="country" type="text" value={customerInfo.country} onChange={handleInputChange} placeholder="Country" className="w-full my-2" />
+
                 </div>
-                {/* Selected country display */}
-                <div className="w-1/2 flex items-center justify-between border border-gray-300 rounded-md px-3 py-2">
-                  <span>India</span>
-                  <span className="h-3 w-3 rounded-full inline-block"></span>
-                </div>
-              </div>
+                
             </div>
             <div className="flex flex-col gap-4">
               <label className="flex items-center">
@@ -116,15 +126,7 @@ const Checkoutpage = () => {
                     >
                       Email
                     </label>
-                    <input
-                      type="email"
-                      id="email"
-                      placeholder="Enter your email"
-                      className="w-full mt-1 border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">
-                      A confirmation email will be sent after checkout.
-                    </p>
+                    <Input name="email" type="email" value={customerInfo.email} onChange={handleInputChange} placeholder="Email" className="w-full my-2" />
                   </div>
                   <div>
                     <label
@@ -133,12 +135,8 @@ const Checkoutpage = () => {
                     >
                       Phone Number
                     </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      placeholder="Enter your phone number"
-                      className="w-full mt-1 border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-                    />
+                    <Input name="number" type="text" value={customerInfo.number} onChange={handleInputChange} placeholder="Phone Numbber" className="w-full my-2" />
+
                     <p className="text-xs text-gray-500 mt-1">
                       A carrier might contact you to confirm delivery.
                     </p>
@@ -146,39 +144,11 @@ const Checkoutpage = () => {
                 </div>
                 {/* PAN Section */}
                 <div className="mb-6">
-                  <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-                    What&#39;s your PAN?
-                  </h2>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="pan"
-                      className="block text-sm sm:text-base font-medium "
-                    >
-                      PAN
-                    </label>
-                    <input
-                      type="text"
-                      id="pan"
-                      placeholder="Enter your PAN"
-                      className="w-full mt-1 border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">
-                      Enter your PAN to enable payment with UPI, Net Banking or
-                      local card methods.
-                    </p>
+                 
                   </div>
                   <div className="flex items-center mb-4">
-                    <input
-                      type="checkbox"
-                      id="save-pan"
-                      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    />
-                    <label
-                      htmlFor="save-pan"
-                      className="ml-2 text-sm sm:text-base "
-                    >
-                      Save PAN details to Nike Profile
-                    </label>
+                    
+                    
                   </div>
                 </div>
                 {/* Consent Section */}
@@ -207,8 +177,8 @@ const Checkoutpage = () => {
                   </div>
                 </div>
                 {/* Submit Button */}
-                <Button className="w-full bg-black text-white rounded-full py-2 text-sm font-medium hover:bg-gray-400 focus:ring-2 focus:ring-blue-500">
-                  Continue
+                <Button onClick={handleCheckout} className="w-full bg-black text-white rounded-full py-2 text-sm font-medium hover:bg-gray-400 focus:ring-2 focus:ring-blue-500">
+                  Submit Order
                 </Button>
               </div>
             </div>
@@ -249,8 +219,8 @@ const Checkoutpage = () => {
 
             <div className="space-y-6">
               {/* Product List */}
-              {cartArray.map((item, i) => (
-                <div key={i} className="flex items-start space-x-4">
+              {cartArray.map((item ,i) => (
+                <div key={item._id ?? i} className="flex items-start space-x-4">
                   {item.img && Array.isArray(item.img) ? (
                     <Image
                       src={item.img[0]} // Access the first image if it's an array

@@ -4,11 +4,12 @@ import { LuSettings2 } from "react-icons/lu";
 import { IoIosArrowForward, IoIosMenu } from "react-icons/io";
 import Link from "next/link";
 import BestsellingCard from "./ProductCard";
-import { ProductType } from "../../../type/product";
+import { ProductType } from "../../type/product";
 import { client } from "@/sanity/lib/client";
 import { allproducts } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import PaginationComponent from "./pagination";
+import { Flip, ToastContainer } from "react-toastify";
 
 const Allproductpage = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -20,7 +21,7 @@ const Allproductpage = () => {
       try {
         const fetchedProduct: ProductType[] = await client.fetch(allproducts);
         setProducts(fetchedProduct);
-        console.log(fetchedProduct)
+        // console.log(fetchedProduct)
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -194,6 +195,8 @@ const Allproductpage = () => {
                       price={items.price}
                       category={items.category}
                       slug={items.slug.current}
+                      // onAddToCart={() => addToCart(item)} // Pass function
+
                     />
                   </div>
                 );
@@ -209,6 +212,16 @@ const Allproductpage = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+    position="bottom-right"
+    autoClose={1000}
+    hideProgressBar={false}
+    closeOnClick
+    draggable={false}
+    pauseOnHover={false}
+    theme="light"
+    transition={Flip}
+  />
     </div>
   );
 };

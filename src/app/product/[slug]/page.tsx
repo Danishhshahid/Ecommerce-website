@@ -1,6 +1,6 @@
-import { getProducts } from '@/lib/getProducts'; // Correct import path
-import SlugPage from './slugPage'; // Correct import path
-import { ProductType } from '../../../../type/product'; // Assuming you have this type defined
+import { getProducts } from '@/lib/getProducts'; 
+import SlugPage from './slugPage'; 
+import { ProductType } from '../../../type/product';
 
 interface ProductPageProps {
   params: Promise<{ slug: string; }>; 

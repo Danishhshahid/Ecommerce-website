@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import BestsellingCard from "../components/ProductCard";
 import { client } from "../../sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import { ProductType } from "../../../type/product";
+import { ProductType } from "../../type/product";
 import PaginationComponent from "../components/pagination";
+import { Flip, ToastContainer } from "react-toastify";
 
 const CategoryPage = ({ params }: { params: { category: string } }) => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -86,6 +87,16 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
           </div>
         )}
       </div>
+      <ToastContainer
+    position="bottom-right"
+    autoClose={1000}
+    hideProgressBar={false}
+    closeOnClick
+    draggable={false}
+    pauseOnHover={false}
+    theme="light"
+    transition={Flip}
+  />
         <PaginationComponent
               currentPage={currentPage}
               totalPages={Math.ceil(products.length / productsPerPage)}

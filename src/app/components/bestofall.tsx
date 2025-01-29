@@ -4,7 +4,7 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import BestsellingCard from "./ProductCard";
 import { urlFor } from "@/sanity/lib/image";
 import { useEffect, useState } from "react";
-import { ProductType } from "../../../type/product";
+import { ProductType } from "../../type/product";
 import { client } from "@/sanity/lib/client";
 import { bestofall } from "@/sanity/lib/queries";
 import {
@@ -15,6 +15,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Flip, ToastContainer } from "react-toastify";
 
 const Bestofall = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -26,7 +27,7 @@ const Bestofall = () => {
       try {
         const fetchedProduct: ProductType[] = await client.fetch(bestofall);
         setProducts(fetchedProduct);
-        console.log(fetchedProduct);
+        // console.log(fetchedProduct);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -120,6 +121,17 @@ const Bestofall = () => {
           />
         ))}
       </div>
+          {/* Toast Notifications */}
+  <ToastContainer
+    position="bottom-right"
+    autoClose={1000}
+    hideProgressBar={false}
+    closeOnClick
+    draggable={false}
+    pauseOnHover={false}
+    theme="light"
+    transition={Flip}
+  />
     </div>
   );
 };
