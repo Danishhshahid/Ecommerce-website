@@ -9,6 +9,7 @@ import {  useAppSelector } from "../store/hooks";
 import { urlFor } from "@/sanity/lib/image";
 // import { Customerinfo } from "../../type/checkout";
 import checkOut from "@/actions/checkOut";
+import { Flip, toast, ToastContainer } from "react-toastify";
 
 const Checkoutpage = () => {
   const cartArray = useAppSelector((state) => state.cart);
@@ -32,6 +33,16 @@ const Checkoutpage = () => {
   const handleCheckout =()=>{
     checkOut(cartArray,customerInfo)
 
+    toast.success("Order Placed SuccessFully!", {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      theme: "light",
+      transition: Flip,
+    });
   }
 
 
@@ -219,8 +230,8 @@ const Checkoutpage = () => {
 
             <div className="space-y-6">
               {/* Product List */}
-              {cartArray.map((item ,i) => (
-                <div key={item._id ?? i} className="flex items-start space-x-4">
+              {cartArray.map((item,i) => (
+                <div key={i} className="flex items-start space-x-4">
                   {item.img && Array.isArray(item.img) ? (
                     <Image
                       src={item.img[0]} // Access the first image if it's an array
@@ -248,26 +259,23 @@ const Checkoutpage = () => {
                   </div>
                 </div>
               ))}
-
-              {/* <div className="flex items-start space-x-4">
-                <Image
-                  src={pic1}
-                  alt="Product 2"
-                  className="w-20 h-20 object-cover rounded-md"
-                />
-                <div>
-                  <h2 className="text-sm font-medium ">
-                    Nike Air Max 97 SE Men&#39;s Shoes
-                  </h2>
-                  <p className="text-sm text-gray-300">Qty 1</p>
-                  <p className="text-sm text-gray-300">Size UK 8</p>
-                  <p className="text-sm font-medium">₹ 16,995.00</p>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover={false}
+        theme="light"
+        transition={Flip}
+      />
     </div>
   );
 };

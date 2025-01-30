@@ -41,7 +41,7 @@ const Bestofall = () => {
 
     const interval = setInterval(() => {
       api.scrollNext(); // Move to the next slide
-    }, 2000); // 2 seconds interval
+    }, 2500); // 2 seconds interval
 
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, [api]);

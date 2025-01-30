@@ -46,7 +46,7 @@ const Gearup = () => {
       if (mensProducts.length > 1) {
         mensApi.scrollNext();
       }
-    }, 2000);
+    }, 2500);
 
     return () => clearInterval(interval);
   }, [mensApi, mensProducts.length]);
@@ -59,7 +59,7 @@ const Gearup = () => {
       if (womensProducts.length > 1) {
         womensApi.scrollNext();
       }
-    }, 2000);
+    }, 2500);
 
     return () => clearInterval(interval);
   }, [womensApi, womensProducts.length]);

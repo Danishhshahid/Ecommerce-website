@@ -40,10 +40,11 @@ const createOrderInSanity =async (CartData:Cart[], customer_id:string)=>
         item:CartData.map((item)=>({
             _type:"items",
             _id:item._id,
+            product_image :item.img,
             product_name:item.ProductName,
             product_price:item.price,
             product_description:item.description,
-            quantity :1
+            quantity :item.qty
         })),
         order_date :new Date().toISOString()
         
